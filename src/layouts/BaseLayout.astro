@@ -1,0 +1,71 @@
+---
+
+import '../styles/reset.css';
+import '../styles/themes.css';
+import '../styles/global.css';
+
+const siteName = "Sober Studio";
+const baseUrl = "https://dayahendaye.fr";
+
+const {
+  pageTitle = "Street food asiatique à Hendaye",
+  canonicalUrl,
+  description = `Daya hendaye c’est le meilleur de la street food vietnamienne, thaï et cambodgienne. De la cuisine maison avec des produits frais et de qualité. Nous proposons également des plats végétariens. Venez découvrir notre restaurant situé à deux pas de la plage d’hendaye au pays basque : )`,
+} : {
+  pageTitle?: string;
+  canonicalUrl?: string;
+  description?: string;
+} = Astro.props;
+
+// Compute canonical URL dynamically if not provided
+const computedCanonicalUrl = canonicalUrl || baseUrl + Astro.url.pathname;
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{pageTitle} | {siteName}</title>
+<link rel="icon" href="/favicon.svg" type="image/x-icon" />
+  <!-- SEO Meta Tags -->
+   <meta name="robots" content="index, follow" />
+     <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta name="description" content={description} />
+  <meta name="keywords" content=" Street food asiatique, Hendaye, nems, bo bun, banh mi, burger, cuisine Thai, cuisine Cambodgienne, cuisine Vietnamienne, produits frais, produit de qualité, viande origine francaise, plats végétariens, plats végan" />
+  <meta name="author" content="Daya Hendaye" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={`${pageTitle} | ${siteName}`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={computedCanonicalUrl} />
+  <meta property="og:image" content="https://dayahendaye.fr/og-daya-hendaye.webp" />
+  <meta property="og:site_name" content={siteName} />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`${pageTitle} | ${siteName}`} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://dayahendaye.fr/og-daya-hendaye.webp" />
+  <meta name="twitter:site" content="@yourtwitterhandle" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href={computedCanonicalUrl} />
+
+  <!-- iOS Safari Status Bar -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+</head>
+
+<body >
+  <Header />
+  <main>
+    <slot />
+  </main>
+ 
+</body>
+
+</html>
+
