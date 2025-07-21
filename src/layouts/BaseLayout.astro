@@ -2,9 +2,11 @@
 
 import '../styles/reset.css';
 import '../styles/themes.css';
+import '../styles/fonts.css';
 import '../styles/global.css';
 
-const siteName = "Sober Studio";
+
+const siteName = "Daya Hendaye";
 const baseUrl = "https://dayahendaye.fr";
 
 const {
@@ -20,6 +22,9 @@ const {
 // Compute canonical URL dynamically if not provided
 const computedCanonicalUrl = canonicalUrl || baseUrl + Astro.url.pathname;
 ---
+
+
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -60,7 +65,7 @@ const computedCanonicalUrl = canonicalUrl || baseUrl + Astro.url.pathname;
 </head>
 
 <body >
-  <Header />
+
   <main>
     <slot />
   </main>

@@ -1,0 +1,50 @@
+---
+import HeroImage from "../../assets/Daya-Hendaye-hero.jpg";
+import {Image} from "astro:assets";
+---
+
+
+    
+<Image
+  src={HeroImage}
+  alt="Daya Hendaye Hero Image"
+  class="hero-image"
+  width={1600}
+  height={900}
+  widths={[240, 350, 540, 720, HeroImage.width]}
+  sizes={`(max-width: 360px) 240px, (max-width: 425px) 350px ,(max-width: 720px) 540px, (max-width: 1600px) 720px, ${HeroImage.width}px`}
+  format="avif"
+  quality={50}
+/>
+
+
+
+<style>
+/* .hero {
+		width: 100%;
+		height: 60dvh;
+		overflow: hidden;
+		position: relative;
+     
+	} */
+
+.hero-image {
+  /* width: 100%;
+  height: 100%; */
+  object-fit: cover;
+  object-position: 50% 30%;
+  display: block;
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+    z-index: 1;
+  background: rgba(15, 54, 56, .7); /* semi-transparent black */
+  pointer-events: none; /* allows clicks to pass through */
+}
+</style>
