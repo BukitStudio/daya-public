@@ -6,9 +6,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "host": "npm run dev -- --host"
   },
   "dependencies": {
+    "@unpic/astro": "^1.0.0",
     "astro": "^5.12.0"
   }
 }
