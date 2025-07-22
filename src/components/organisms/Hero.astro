@@ -19,7 +19,7 @@ import LogoDaya from "../atoms/LogoDaya.astro";
     fetchpriority="high"
     quality={40}
   />
-<script>
+<!-- <script>
   // Remove blur effect once hero image is loaded
   window.addEventListener('DOMContentLoaded', () => {
     const heroImg = document.querySelector('.hero-image');
@@ -29,7 +29,7 @@ import LogoDaya from "../atoms/LogoDaya.astro";
       });
     }
   });
-</script>
+</script> -->
 
   <div class="hero-overlay"></div>
   <div class="logo-container">
@@ -68,9 +68,9 @@ import LogoDaya from "../atoms/LogoDaya.astro";
     display: block;
     transition: filter 1s cubic-bezier(.4,0,.2,1);
   }
-  .hero-image.blur {
+  /* .hero-image.blur {
     filter: blur(24px) brightness(0.7);
-  }
+  } */
 
   .hero-overlay {
     position: absolute;
