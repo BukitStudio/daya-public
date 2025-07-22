@@ -1,0 +1,41 @@
+---
+import Bobun from '../../assets/icons/bobun.svg';
+import Boisson from '../../assets/icons/boisson.svg';
+import Burger from '../../assets/icons/burger.svg';
+import Dessert from '../../assets/icons/dessert.svg';
+import Kid from '../../assets/icons/kid.svg';
+import Nem from '../../assets/icons/nem.svg';
+import Riz from '../../assets/icons/riz.svg';
+import Sandwich from '../../assets/icons/sandwich.svg';
+import Side from '../../assets/icons/side.svg';
+
+const icons = {
+  bobun: Bobun,
+  boisson: Boisson,
+  burger: Burger,
+  dessert: Dessert,
+  kid: Kid,
+  nem: Nem,
+  riz: Riz,
+  sandwich: Sandwich,
+  side: Side,
+};
+
+type IconName = keyof typeof icons;
+
+const { icon, ...rest } = Astro.props as { icon: IconName };
+
+const SvgIcon = icons[icon];
+---
+
+{SvgIcon ? (
+  <SvgIcon
+    role="img"
+    aria-label={icon.charAt(0).toUpperCase() + icon.slice(1) + ' icon'}
+    {...rest}
+  >
+    <title>{icon.charAt(0).toUpperCase() + icon.slice(1)} icon</title>
+  </SvgIcon>
+) : (
+  <span role="img" aria-label={`Icon not found: ${icon}`} >Icon not found: {icon}</span>
+)}

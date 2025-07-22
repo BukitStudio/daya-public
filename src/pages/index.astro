@@ -1,16 +1,41 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/organisms/Hero.astro";
-import Info from "../data/info.json";
+import Icon from "../components/molecules/Icon.astro";
+
 ---
 
 <BaseLayout>
-	<Hero />
 
-		<div id="intro"class="wide">
-		<h1 class="h1 ">Street Food Asiatique</h1>
-		<h2 class="h6 x neutral-300">Daya Hendaye c’est le meilleur de la street food Vietnamienne, Thaï et Cambodgienne. </h2>
-		</div>
-<p> {Info.address} {Info.tel}</p>
+  <Hero />
+  <div class="content">
+  <div id="intro" class="wide">
+    <h1 class="h1">Street Food Asiatique</h1>
+    <h2 class="h6 x neutral-300">
+    Daya Hendaye c’est le meilleur de la street food Vietnamienne, Thaï et Cambodgienne.
+    </h2>
+  </div>
+
+
+
+
+
+  </div>
 
 </BaseLayout>
+
+
+
+<style>
+
+
+
+.content {
+  background-color: var(--primary-500);
+  position: relative;
+  margin-top: 66vh;
+  border-radius: 32px 32px 0 0;
+  min-height: 100vh;
+}
+
+</style>

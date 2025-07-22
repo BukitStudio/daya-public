@@ -1,0 +1,58 @@
+---
+const {
+  href = '#',
+  icon: Icon = null,
+  text = '',
+  background = 'var(--primary-500)',
+  color = '#fff',
+  ariaLabel = '',
+  target = '_blank',
+  rel = 'noopener',
+  class: className = 'Btn-link',
+  iconColor = color,
+  iconSize = '1.5em',
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={href}
+  aria-label={ariaLabel}
+  target={target}
+  rel={rel}
+  class={className}
+  style={`background: ${background}; color: ${color};`}
+  {...rest}
+>
+  {Icon && <Icon fill={iconColor} width={iconSize} height="auto" style="display:block;flex-shrink:0;" />}
+  {text}
+</a>
+
+<style>
+.Btn-link {
+  display: flex;
+  align-items: center;
+  width:100%;
+  gap: 0.5em;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  padding: .8rem 1.5rem;
+  cursor: pointer;
+  font: inherit;
+  transition: background 0.2s;
+  outline: none;
+  text-decoration: none;
+   white-space: nowrap;
+}
+.Btn-link svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+
+.Btn-link:focus-visible {
+  outline: 2px solid var(--primary-700);
+  outline-offset: 2px;
+}
+

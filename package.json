@@ -10,7 +10,6 @@
     "host": "npm run dev -- --host"
   },
   "dependencies": {
-    "@unpic/astro": "^1.0.0",
     "astro": "^5.12.0"
   }
 }

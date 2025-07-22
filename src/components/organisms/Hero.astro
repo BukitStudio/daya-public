@@ -1,80 +1,93 @@
 ---
 import HeroImage from "../../assets/Daya-Hendaye-hero.jpg";
-import { Image } from "@unpic/astro";
+import { Picture } from "astro:assets";
 import LogoDaya from "../atoms/LogoDaya.astro";
 ---
 
 <div class="hero">
-  <Image
+  <Picture
     src={HeroImage}
     alt="Daya Hendaye Hero Image"
-    class="hero-image"
+    class="hero-image blur"
     width={1600}
     height={900}
-
-     layout="fullWidth"
-
-
-
+    formats={["avif", "webp"]}
+    layout="full-width"
+    fit="cover"
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+    quality={40}
   />
+<script>
+  // Remove blur effect once hero image is loaded
+  window.addEventListener('DOMContentLoaded', () => {
+    const heroImg = document.querySelector('.hero-image');
+    if (heroImg) {
+      heroImg.addEventListener('load', () => {
+        heroImg.classList.remove('blur');
+      });
+    }
+  });
+</script>
 
   <div class="hero-overlay"></div>
   <div class="logo-container">
-    <LogoDaya class="logo-daya" />
+    <LogoDaya class="logo-daya" width="80%" />
   </div>
 </div>
 
 <style>
-.hero {
-  width: 100%;
-  height: 70vh;
-  overflow: hidden;
-  position: relative;
-}
+  .hero {
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  
+  }
 
-.hero picture {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
+  .hero picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-.hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 30%;
-  display: block;
-}
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-position: 60% 10%;
+    object-fit: cover;
+    display: block;
+    transition: filter 1s cubic-bezier(.4,0,.2,1);
+  }
+  .hero-image.blur {
+    filter: blur(24px) brightness(0.7);
+  }
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(15, 54, 56, .6);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.logo-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-
-.logo-daya {
-  width: 150px;
-  height: auto;
-  display: block;
-}
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 25, 26, 0.9);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .logo-container {
+    position: absolute;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
 </style>

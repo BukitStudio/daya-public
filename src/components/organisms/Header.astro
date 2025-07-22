@@ -1,0 +1,187 @@
+---
+import LogoDayaSolo from "../atoms/LogoDayaSolo.astro";
+import Hamburger from "../atoms/Hamburger.astro";
+import BtnLink from "../molecules/BtnLink.astro";
+import Info from "../../data/info.json";
+import ClickCollectIcon from "../../assets/icons/clickCollect.svg";
+import WhatsappIcon from "../../assets/icons/whatsapp.svg";
+import GmapsIcon from "../../assets/icons/gmaps.svg";
+import WazeIcon from "../../assets/icons/waze.svg";
+---
+
+<header class="header">
+  <nav class="nav" aria-label="Main navigation">
+    <button
+      class="logo-header"
+      aria-label="Toggle menu"
+      aria-controls="main-menu"
+      aria-expanded="false"
+      type="button"
+    >
+      <LogoDayaSolo width="80" />
+    </button>
+
+    <ul id="main-menu" class="main-menu" tabindex="-1" hidden>
+      <p>Commander</p>
+      <li>
+        <BtnLink
+          href={Info.clickCollect}
+          background="#E84349"
+          color="#fff"
+          ariaLabel="Click and Collect"
+          icon={ClickCollectIcon}
+          text="Click & Collect"
+        />
+      </li>
+
+      <li>
+        <BtnLink
+          href={Info["order-tel"]}
+          background="#28D366"
+          color="#000000"
+          ariaLabel="WhatsApp"
+          icon={WhatsappIcon}
+          text="WhatsApp"
+        />
+      </li>
+
+      <p>Nous trouver</p>
+      <li>
+        <BtnLink
+          href={Info.gmaps}
+          background="#F6F6F6"
+          color="#404040"
+          ariaLabel="Google Maps"
+          icon={GmapsIcon}
+          text="Google Maps"
+          iconSize="1em"
+        />
+      </li>
+      <li>
+        <BtnLink
+          href={Info.waze}
+          background="#3CCEFE"
+          color="#000000"
+          ariaLabel="Waze"
+          icon={WazeIcon}
+          text="Waze"
+          iconSize="1em"
+        />
+      </li>
+    </ul>
+  </nav>
+
+  <style>
+    .header {
+     
+      height: auto;
+      width: fit-content;
+      display: flex;
+      padding: 0.8rem 1.4rem;
+      border-radius: 999px;
+      background-color: var(--primary-700);
+      z-index: 999;
+      position: sticky;
+      top: 1rem;
+      right: 1rem;
+      margin-left: auto;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .logo-header {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: block;
+      padding: 0;
+      outline: none;
+    }
+
+    .logo-header:focus-visible {
+      outline: 2px solid var(--primary-500);
+      outline-offset: 2px;
+    }
+
+    .main-menu {
+      position: absolute;
+display: flex;
+
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      top: 100%;
+      right: 0;
+      min-width: 250px;
+      background: var(--primary-700);
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      padding: 1rem 1rem;
+      list-style: none;
+      margin: .8rem 0rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition:
+        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    }
+    .main-menu li {
+      margin-bottom: 0.5rem;
+      width:100%
+    }
+    .main-menu li:last-child {
+      margin-bottom: 0;
+    }
+
+    
+
+    .main-menu[aria-hidden="false"] {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .main-menu li {
+      margin-bottom: 0.5rem;
+    }
+    .main-menu li:last-child {
+      margin-bottom: 0;
+    }
+
+    .main-menu a:hover,
+    .main-menu a:focus {
+      background: var(--primary-500);
+    }
+  </style>
+  <script>
+    const logoBtn = document.querySelector(".logo-header");
+    const menu = document.getElementById("main-menu");
+    const nav = document.querySelector(".nav");
+    if (logoBtn && menu && nav) {
+      logoBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const expanded = logoBtn.getAttribute("aria-expanded") === "true";
+        logoBtn.setAttribute("aria-expanded", String(!expanded));
+        menu.setAttribute("aria-hidden", String(expanded));
+      });
+      // Ensure menu is hidden initially
+      menu.setAttribute("aria-hidden", "true");
+
+      document.addEventListener("click", (e) => {
+        if (!nav.contains(e.target as Node)) {
+          logoBtn.setAttribute("aria-expanded", "false");
+          menu.setAttribute("aria-hidden", "true");
+        }
+      });
+    }
+  </script>
+</header>

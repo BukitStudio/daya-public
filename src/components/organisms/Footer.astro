@@ -1,0 +1,35 @@
+---
+import LogoDayaType from "../atoms/LogoDayaType.astro";
+import Info from "../../data/info.json";
+---
+
+<footer class="footer">
+  <div class="footer-container">
+    <LogoDayaType width=300 class="mb1"  />
+
+    <p>{Info.address}</p>
+    <p class="neutral-500 center">  <span set:html={Info.operatingHours.replace(/\n/g, "<br />")} />
+</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+    background-color: var(--primary-700);
+    z-index: 999;
+  }
+
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0rem;
+    margin:auto;
+    padding: 6rem 1rem;
+    max-width: 40ch;
+  }
+
+
+</style>
