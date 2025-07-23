@@ -8,7 +8,10 @@ export const ProductSchema = z.object({
   ingredients: z.string().optional(),
   allergy: z.string().optional(),
   price: z.preprocess((val) => {
-    if (typeof val === 'string') return parseFloat(val.replace(',', '.'));
+    if (typeof val === 'string') {
+      // Remove spaces, replace comma with dot for decimal
+      return parseFloat(val.replace(/\s/g, '').replace(',', '.'));
+    }
     if (typeof val === 'number') return val;
     return undefined;
   }, z.number()),
