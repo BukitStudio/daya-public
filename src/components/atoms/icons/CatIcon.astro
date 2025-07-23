@@ -1,0 +1,35 @@
+---
+import BoeufIcon from '../../../assets/icons/cat/boeuf.svg';
+import PouletIcon from '../../../assets/icons/cat/poulet.svg';
+import PorcIcon from '../../../assets/icons/cat/porc.svg';
+import VeganIcon from '../../../assets/icons/cat/vegan.svg';
+import VegIcon from '../../../assets/icons/cat/veg.svg';
+
+
+
+const catIcon = {
+  boeuf: BoeufIcon,
+  poulet: PouletIcon,
+  porc: PorcIcon,
+  vegan: VeganIcon,
+  veg: VegIcon
+};
+
+type IconName = keyof typeof catIcon;
+
+const { icon, ...rest } = Astro.props as { icon: IconName };
+
+const SvgIcon = catIcon[icon];
+---
+
+{SvgIcon ? (
+  <SvgIcon
+    role="img"
+    aria-label={icon.charAt(0).toUpperCase() + icon.slice(1) + ' icon'}
+    {...rest}
+  >
+    <title>{icon.charAt(0).toUpperCase() + icon.slice(1)} icon</title>
+  </SvgIcon>
+) : (
+  <span role="img" aria-label={`Icon not found: ${icon}`} >Icon not found: {icon}</span>
+)}

@@ -1,13 +1,14 @@
 ---
 import { Picture } from "astro:assets";
 import Nems from "../../assets/ProductPictures/nemsVege.jpg";
-
 import type { Product } from "../../data/productsSchema";
+import CatTag from "./CatTag.astro";
 // @ts-ignore: vegan property is present in the updated schema
 const { product } = Astro.props as { product: Product };
 ---
 
 <article class="product-card">
+
   <div class="product-image-container">
     {product.image ? (
       <Picture
@@ -31,12 +32,19 @@ const { product } = Astro.props as { product: Product };
     {product.unitNumber ? (
       <div class="product-unit">{product.unitNumber} pcs</div>
     ) : null}
+    <div class="product-category-container">
+      {product.category && (
+        product.category.split(',').map((cat) => {
+          const icon = cat.trim().toLowerCase();
+          return icon ? <CatTag icon={icon} /> : null;
+        })
+      )}
+    </div>
   </div>
-  <div class="product-content">
 
-        {product.category ? (
-      <div class="product-category">{product.category}</div>
-    ) : null}
+  <div class="product-content">
+    <!-- ...existing code... -->
+  </div>
     <h2 class="product-name">{product.name}</h2>
     <hr class="product-divider" />
 
@@ -84,6 +92,10 @@ const { product } = Astro.props as { product: Product };
     flex-direction: column;
     gap:1rem;
   }
+
+
+
+
   .product-image {
     width: 100%;
     max-width: 320px;
@@ -99,6 +111,22 @@ const { product } = Astro.props as { product: Product };
     width: 100%;
     max-width: 320px;
   }
+
+.product-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.product-category-container {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  z-index: 3;
+}
 
   .product-content{
     display: flex;

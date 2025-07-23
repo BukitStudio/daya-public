@@ -1,0 +1,41 @@
+---
+import CatIcon from "../atoms/icons/CatIcon.astro";
+
+const {
+  icon: Icon = null,
+  color = "#fff",
+  ariaLabel = "",
+  class: className = "cat-tag",
+
+  ...rest
+} = Astro.props;
+---
+
+<div aria-label={ariaLabel} class={className}>
+  {
+    Icon && (
+      <CatIcon icon={Icon}   />
+    )
+  }
+</div>
+
+<style>
+  .cat-tag {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-500);
+    border: 3px solid var(--primary-500);
+  
+    border-radius: 9999px;
+  }
+
+  .cat-tag svg {
+    width: 25px;
+
+    display: block;
+    fill: var(--primary-500);
+  }
+</style>
