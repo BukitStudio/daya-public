@@ -1,5 +1,5 @@
 ---
-import LogoDayaSolo from "../atoms/LogoDayaSolo.astro";
+
 import Hamburger from "../atoms/Hamburger.astro";
 import BtnLink from "../molecules/BtnLink.astro";
 import Info from "../../data/info.json";
@@ -12,13 +12,13 @@ import WazeIcon from "../../assets/icons/waze.svg";
 <header class="header">
   <nav class="nav" aria-label="Main navigation">
     <button
-      class="logo-header"
+      class="hamburger"
       aria-label="Toggle menu"
       aria-controls="main-menu"
       aria-expanded="false"
       type="button"
     >
-      <LogoDayaSolo width="80" />
+      <Hamburger  />
     </button>
 
     <ul id="main-menu" class="main-menu" tabindex="-1" hidden>
@@ -73,13 +73,14 @@ import WazeIcon from "../../assets/icons/waze.svg";
 
   <style>
     .header {
-     
+          cursor: pointer;
       height: auto;
       width: fit-content;
       display: flex;
       padding: 0.8rem 1.4rem;
       border-radius: 999px;
-      background-color: var(--primary-700);
+            background-color: var(--primary-700);
+
       z-index: 999;
       position: sticky;
       top: 1rem;
@@ -95,7 +96,9 @@ import WazeIcon from "../../assets/icons/waze.svg";
       width: 100%;
     }
 
-    .logo-header {
+
+    .hamburger {
+
       background: none;
       border: none;
       cursor: pointer;
@@ -104,7 +107,7 @@ import WazeIcon from "../../assets/icons/waze.svg";
       outline: none;
     }
 
-    .logo-header:focus-visible {
+    .hamburger:focus-visible {
       outline: 2px solid var(--primary-500);
       outline-offset: 2px;
     }
@@ -163,7 +166,7 @@ display: flex;
     }
   </style>
   <script>
-    const logoBtn = document.querySelector(".logo-header");
+    const logoBtn = document.querySelector(".header");
     const menu = document.getElementById("main-menu");
     const nav = document.querySelector(".nav");
     if (logoBtn && menu && nav) {

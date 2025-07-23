@@ -8,7 +8,6 @@ import LogoDaya from "../atoms/LogoDaya.astro";
   <Picture
     src={HeroImage}
     alt="Daya Hendaye Hero Image"
-    class="hero-image blur"
     width={1600}
     height={900}
     formats={["avif", "webp"]}
@@ -17,25 +16,19 @@ import LogoDaya from "../atoms/LogoDaya.astro";
     loading="eager"
     decoding="async"
     fetchpriority="high"
-    quality={40}
+    quality={30}
+    class="hero-image"
   />
-<!-- <script>
-  // Remove blur effect once hero image is loaded
-  window.addEventListener('DOMContentLoaded', () => {
-    const heroImg = document.querySelector('.hero-image');
-    if (heroImg) {
-      heroImg.addEventListener('load', () => {
-        heroImg.classList.remove('blur');
-      });
-    }
-  });
-</script> -->
+
 
   <div class="hero-overlay"></div>
   <div class="logo-container">
-    <LogoDaya class="logo-daya" width="80%" />
+    <LogoDaya class="logo-daya" width="60%" />
   </div>
 </div>
+
+
+
 
 <style>
   .hero {
@@ -44,15 +37,34 @@ import LogoDaya from "../atoms/LogoDaya.astro";
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
     position: fixed;
     top: 0;
     left: 0;
     z-index: -1;
-  
+      padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media screen and (max-width: 768px) {
+    .hero {
+   width: 100%;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+      padding-left: 16px;
+  padding-right: 16px;
+    }
   }
 
-  .hero picture {
+
+.hero picture {
     position: absolute;
     top: 0;
     left: 0;
@@ -61,16 +73,26 @@ import LogoDaya from "../atoms/LogoDaya.astro";
   }
 
   .hero-image {
-    width: 100%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
     object-position: 60% 10%;
     object-fit: cover;
     display: block;
-    transition: filter 1s cubic-bezier(.4,0,.2,1);
+    transition: filter 0.15s linear;
   }
-  /* .hero-image.blur {
-    filter: blur(24px) brightness(0.7);
-  } */
+  .hero-image.blur {
+    filter: blur(8px) ;
+  }
+:global(.logo-daya) {
+  /* backface-visibility: hidden; */
+  transform: translateZ(0);
+  transition: filter 0.15s linear, opacity 0.15s linear;
+}
+  
+
+
 
   .hero-overlay {
     position: absolute;
@@ -80,11 +102,11 @@ import LogoDaya from "../atoms/LogoDaya.astro";
     height: 100%;
     background: rgba(5, 25, 26, 0.9);
     pointer-events: none;
-    z-index: 1;
+    z-index: 0;
   }
   .logo-container {
     position: absolute;
-    height: 80%;
+ 
     display: flex;
     align-items: center;
     justify-content: center;
