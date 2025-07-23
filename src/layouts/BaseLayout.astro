@@ -33,12 +33,14 @@ const computedCanonicalUrl = canonicalUrl || baseUrl + Astro.url.pathname;
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
+    <link rel="robots" href="/robots.txt" />
+
   <meta name="generator" content={Astro.generator} />
   <title>{pageTitle} | {siteName}</title>
 <link rel="icon" href="/favicon.svg" type="image/x-icon" />
   <!-- SEO Meta Tags -->
    <meta name="robots" content="index, follow" />
-     <link rel="sitemap" href="/sitemap-index.xml" />
+     <link rel="sitemap" href="/sitemap.xml" />
   <meta name="description" content={description} />
   <meta name="keywords" content=" Street food asiatique, Hendaye, nems, bo bun, banh mi, burger, cuisine Thai, cuisine Cambodgienne, cuisine Vietnamienne, produits frais, produit de qualité, viande origine francaise, plats végétariens, plats végan" />
   <meta name="author" content="Daya Hendaye" />
