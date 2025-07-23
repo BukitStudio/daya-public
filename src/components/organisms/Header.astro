@@ -171,19 +171,32 @@ import WazeIcon from "../../assets/icons/waze.svg";
     const menu = document.getElementById("main-menu");
     const nav = document.querySelector(".nav");
     if (logoBtn && menu && nav) {
+      function setMenuTabbable(isOpen: boolean) {
+        if (!menu) return;
+        const links = menu.querySelectorAll('a, button, input, select, textarea');
+        links.forEach(link => {
+          (link as HTMLElement).tabIndex = isOpen ? 0 : -1;
+        });
+      }
       logoBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         const expanded = logoBtn.getAttribute("aria-expanded") === "true";
         logoBtn.setAttribute("aria-expanded", String(!expanded));
         menu.setAttribute("aria-hidden", String(expanded));
+        menu.hidden = expanded;
+        setMenuTabbable(!expanded);
       });
       // Ensure menu is hidden initially
       menu.setAttribute("aria-hidden", "true");
+      menu.hidden = true;
+      setMenuTabbable(false);
 
       document.addEventListener("click", (e) => {
         if (!nav.contains(e.target as Node)) {
           logoBtn.setAttribute("aria-expanded", "false");
           menu.setAttribute("aria-hidden", "true");
+          menu.hidden = true;
+          setMenuTabbable(false);
         }
       });
     }

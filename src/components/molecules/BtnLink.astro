@@ -1,10 +1,12 @@
 ---
 const {
   href = '#',
+
   icon: Icon = null,
   text = '',
   background = 'var(--primary-500)',
   color = '#fff',
+   
   ariaLabel = '',
   target = '_blank',
   rel = 'noopener',
@@ -17,6 +19,7 @@ const {
 
 <a
   href={href}
+    title={ariaLabel}
   aria-label={ariaLabel}
   target={target}
   rel={rel}
