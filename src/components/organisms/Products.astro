@@ -16,12 +16,24 @@ const products = await fetchProductsSheet();
 
 <style>
   .products-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 320px));
+    gap: 1rem;
+    row-gap: 3.5rem;
+    justify-items: center;
     justify-content: center;
- 
+    padding: 3rem 2rem;
+    margin: 0 auto;
+    max-width: 760px;
+    min-width: 0;
   }
+
+
+
+
+
   .products-list li {
     list-style: none;
+    width: 100%;
+    min-width: 0;
   }
