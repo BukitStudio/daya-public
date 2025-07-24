@@ -1,0 +1,242 @@
+---
+import FoodIcon from "../atoms/icons/FoodIcon.astro";
+
+---
+
+<nav class="food-nav hide-on-scroll">
+  <div class="food-tags narrow">
+    <ul>
+      <li>
+        <a class="food-link" href="#nem">
+          <FoodIcon icon="nem" ariaLabel="Nem" />Nem</a
+        >
+      </li>
+      <li>
+        <a class="food-link" href="#bobun">
+          <FoodIcon icon="bobun" ariaLabel="Bobun" />Bobun
+        </a>
+      </li>
+      <li>
+        <a class="food-link" href="#sandwich">
+          <FoodIcon icon="sandwich" ariaLabel="Sandwich" />Sandwich</a
+        >
+      </li>
+      <li>
+        <a class="food-link" href="#burger">
+          <FoodIcon icon="burger" ariaLabel="Burger" />Burger</a
+        >
+      </li>
+      <li>
+        <a class="food-link" href="#plat">
+          <FoodIcon icon="plat" ariaLabel="Plat principal" />Plat principal</a
+        >
+      </li>
+      <li>
+        <a class="food-link" href="#kid">
+          <FoodIcon icon="kid" ariaLabel="Menu enfant" />Menu enfant</a
+        >
+      </li>
+      <li>
+        <a class="food-link" href="#dessert">
+          <FoodIcon icon="dessert" ariaLabel="Dessert" />Dessert</a
+        >
+      </li>
+      <li>
+        <a class="food-link" href="#side">
+          <FoodIcon icon="side" ariaLabel="Accompagnement" />Side</a
+        >
+      </li>
+      <li>
+        <a class="food-link" href="#boisson">
+          <FoodIcon icon="boisson" ariaLabel="Boisson" />Boisson</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+ .food-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-600);
+    padding: 1rem;
+  }
+
+  .food-tags ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1rem;
+    justify-content: center;
+  }
+
+    .food-tags ul li{
+        flex: 0 0 auto;
+     }
+
+  .food-link {
+    display: flex;
+    width: fit-content;
+    height: 50px;
+    gap: 0.8rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0.6rem 1.3rem;
+    font-size: 1.3rem;
+    text-decoration: none;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    color: var(--primary-700);
+    border: 1px solid var(--primary-700);
+  
+  }
+
+.food-link:active{
+    background-color: var(--secondary-500);
+    color: var(--primary-500);
+  }
+
+  .food-link:hover {
+    color: var(--primary-700);
+    background-color: var(--primary-500);
+  }
+
+  .food-link:focus-visible {
+    outline: 2px solid var(--primary-700);
+    outline-offset: 2px;
+  }
+
+
+.food-link svg {
+  width: 2rem;
+  height: 2rem;
+  display: block;
+  vertical-align: middle;
+}
+
+  .food-link:hover {
+    color: var(--primary-700);
+    background-color: var(--primary-500);
+  }
+
+  .food-link:focus-visible {
+    outline: 2px solid var(--primary-700);
+    outline-offset: 2px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .food-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: auto;
+      width: 100vw;
+      z-index: 1000;
+      margin: 0;
+      padding: 1rem 0 1rem 0;
+ 
+      box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.10);
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-top: 1.5px solid rgba(255,255,255,0.35);
+    
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s cubic-bezier(0.4,0,0.2,1);
+      /* Optional: subtle inner shadow for depth */
+      box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.10), inset 0 1px 8px 0 rgba(255,255,255,0.10);
+    }
+    .food-nav.hide-on-scroll {
+      transform: translateY(100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .food-tags.narrow {
+       all: unset;
+       height: fit-content;
+   
+    }
+      .food-tags {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+    .food-tags ul {
+          width: 90%;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      align-items: center;
+      padding: 0rem 1rem        ;
+    justify-content: flex-start;
+      gap: 1rem;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      
+    }
+       
+    
+    .food-tags ul::-webkit-scrollbar {
+  display: none;
+}
+  }
+
+
+  
+
+
+
+</style>
+
+
+
+
+<script>
+  if (typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches) {
+    document.addEventListener('DOMContentLoaded', function() {
+      const nav = document.querySelector('.food-nav');
+      let lastScrollY = window.scrollY;
+      let ticking = false;
+      let hideTimeout: ReturnType<typeof setTimeout> | null = null;
+      function onScroll() {
+        if (!nav) return;
+        const currentScrollY = window.scrollY;
+        if (hideTimeout) clearTimeout(hideTimeout);
+        hideTimeout = setTimeout(() => {
+          if (currentScrollY < 50) {
+            nav.classList.remove('hide-on-scroll');
+          } else if (currentScrollY < lastScrollY) {
+            nav.classList.add('hide-on-scroll'); // hide on scroll up
+          } else {
+            nav.classList.remove('hide-on-scroll'); // show on scroll down
+          }
+          lastScrollY = currentScrollY;
+          ticking = false;
+        }, 250); // 250ms delay
+      }
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      });
+      // Hide at bottom initially
+      if (nav) nav.classList.add('hide-on-scroll');
+    });
+  }
+</script>

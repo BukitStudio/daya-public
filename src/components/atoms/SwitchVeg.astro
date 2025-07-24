@@ -76,3 +76,35 @@ const { id = "filter-switch", checked = false, onChange = undefined } = Astro.pr
   outline-offset: 2px;
 }
 </style>
+
+  <script>
+    // Filtering logic for veg category switch
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterSwitch = document.getElementById('filter-switch') as HTMLInputElement | null;
+      const productsList = document.getElementById('products-list');
+      if (!filterSwitch || !productsList) return;
+      function isVegCategory(li: HTMLLIElement) {
+        // Accepts any category containing 'veg' (case-insensitive)
+        return li.dataset.category && li.dataset.category.includes('veg');
+      }
+      function updateFilter() {
+        if (!filterSwitch) return;
+        const checked = filterSwitch.checked;
+        if (!productsList) return;
+        const items = productsList.querySelectorAll('li');
+        items.forEach(li => {
+          if (!checked) {
+            li.style.display = '';
+          } else {
+            if (isVegCategory(li)) {
+              li.style.display = '';
+            } else {
+              li.style.display = 'none';
+            }
+          }
+        });
+      }
+      filterSwitch.addEventListener('change', updateFilter);
+      if (filterSwitch.checked) updateFilter();
+    });
+  </script>

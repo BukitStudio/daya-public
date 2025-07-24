@@ -8,71 +8,83 @@ const { product } = Astro.props as { product: Product };
 ---
 
 <article class="product-card">
-
   <div class="product-image-container">
-    {product.image ? (
-      <Picture
-        src={Nems}
-        alt={product.name}
-        class="product-image"
-        width="320"
-        height="320"
-        loading="lazy"
-        formats={["avif", "webp"]}
-        fit="cover"
-        decoding="async"
-        quality={70}
-      />
-    ) : (
-      <div
-        class="product-image product-image--placeholder"
-        aria-label="No image available"
-      />
-    )}
-    {product.unitNumber ? (
-      <div class="product-unit">{product.unitNumber} pcs</div>
-    ) : null}
+    {
+      product.image ? (
+        <Picture
+          src={Nems}
+          alt={product.name}
+          class="product-image"
+          width="320"
+          height="320"
+          loading="lazy"
+          formats={["avif", "webp"]}
+          fit="cover"
+          decoding="async"
+          quality={70}
+        />
+      ) : (
+        <div
+          class="product-image product-image--placeholder"
+          aria-label="No image available"
+        />
+      )
+    }
+    {
+      product.unitNumber ? (
+        <div class="product-unit">{product.unitNumber} pcs</div>
+      ) : null
+    }
     <div class="product-category-container">
-      {product.category && (
-        product.category.split(',').map((cat) => {
-          const icon = cat.trim().toLowerCase();
-          return icon ? <CatTag icon={icon} /> : null;
-        })
-      )}
+      {
+        product.category &&
+          product.category.split(",").map((cat) => {
+            const icon = cat.trim().toLowerCase();
+            return icon ? <CatTag icon={icon} /> : null;
+          })
+      }
     </div>
   </div>
 
-  <div class="product-content">
-    <!-- ...existing code... -->
-  </div>
-    <h2 class="product-name">{product.name}</h2>
-    <hr class="product-divider" />
+  <div class="product-content"></div>
+  <h2 class="product-name">{product.name}</h2>
+  <hr class="product-divider" />
 
-    {product.ingredients ? (
+  {
+    product.ingredients ? (
       <ul class="product-ingredients">
-        {product.ingredients.split(';').map((ing) => {
+        {product.ingredients.split(";").map((ing) => {
           const ingredient = ing.trim();
           return ingredient ? <li>{ingredient}</li> : null;
         })}
       </ul>
-    ) : null}
+    ) : null
+  }
 
-     
-    {product.vegan ? <div class="product-vegan"><p>{product.vegan}</p></div> : null}
+  {
+    product.vegan ? (
+      <div class="product-vegan">
+        <p>{product.vegan}</p>
+      </div>
+    ) : null
+  }
 
-     <hr class="product-divider" />
+  <hr class="product-divider" />
 
-    {product.price !== undefined ? (
-      <div class="product-price">{product.price.toFixed(2).replace('.', ',')} €</div>
-    ) : null}
+  {
+    product.price !== undefined ? (
+      <div class="product-price">
+        {product.price.toFixed(2).replace(".", ",")} €
+      </div>
+    ) : null
+  }
 
-
- 
-    {product.allergy ? (
+  {
+    product.allergy ? (
       <div class="product-allergy">
         <p class="mb0">Allergènes</p>
         <div class="product-allergy-tag-container">
-          {product.allergy.split(',').map((all, i) => {
+          {product.allergy.split(",").map((all, i) => {
             const allergy = all.trim();
             return allergy ? (
               <span class="product-allergy-tag">{allergy}</span>
@@ -80,55 +92,51 @@ const { product } = Astro.props as { product: Product };
           })}
         </div>
       </div>
-    ) : null}
-  </div>
+    ) : null
+  }
 </article>
 
 <style>
   .product-card {
     width: 100%;
 
-
     display: flex;
     flex-direction: column;
-    gap:.5rem;
+    gap: 0.5rem;
   }
-
-
-
 
   .product-image {
     width: 100%;
     aspect-ratio: 1 / 1;
     height: auto;
-    border-radius: 1rem;
+  
     object-fit: cover;
-    background: var(--primary-400);
+
     display: block;
   }
   .product-image-container {
     position: relative;
+    overflow: hidden;
     width: 100%;
     aspect-ratio: 1 / 1;
+    border-radius: 1rem;
     background: var(--primary-400);
   }
 
-.product-category-container {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  z-index: 3;
-}
+  .product-category-container {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    z-index: 3;
+  }
 
-  .product-content{
+  .product-content {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
-
-
+    gap: 0.5rem;
   }
   .product-unit {
     position: absolute;
@@ -137,11 +145,11 @@ const { product } = Astro.props as { product: Product };
     background-color: var(--secondary-500);
     color: var(--primary-500);
     padding: 0.4rem 0.6em;
-    border-radius: 0rem .5rem 0 .5rem;
+    border-radius: 0rem 0.5rem 0 0.5rem;
     font-size: 1rem;
     z-index: 2;
     width: fit-content;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .product-name {
@@ -149,13 +157,13 @@ const { product } = Astro.props as { product: Product };
     font-size: 1.2rem;
     font-weight: bold;
   }
-.product-divider {
-  width: 100%;
-  border: none;
-  border-top: 1px dashed var(--neutral-300);
-  height: 0;
-  margin: 0rem 0 .5rem 0rem;
-}
+  .product-divider {
+    width: 100%;
+    border: none;
+    border-top: 1px dashed var(--neutral-300);
+    height: 0;
+    margin: 0rem 0 0.5rem 0rem;
+  }
   .product-category {
     color: #2a7a6c;
     font-weight: 500;
@@ -168,15 +176,14 @@ const { product } = Astro.props as { product: Product };
     border-radius: 0.25rem;
     font-size: 1.4rem;
     font-weight: 500;
-   
   }
 
   .product-ingredients {
-font-size: .8rem;
-line-height: 1rem;
-font-weight: 300;;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    font-weight: 300;
     color: var(--neutral-300);
-   
+
     padding-left: 1.2em;
     margin-bottom: 0.5rem;
   }
@@ -185,27 +192,25 @@ font-weight: 300;;
     margin-bottom: 0.2em;
   }
 
-    .product-vegan {
-       color:#AEFFBA;
-    }
+  .product-vegan {
+    color: #aeffba;
+  }
   .product-allergy {
-   display: flex;
-   flex-direction: column;
+    display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 0.5rem;
- 
   }
-.product-allergy-tag-container{
+  .product-allergy-tag-container {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
   }
 
-
-  .product-allergy-tag{
-    font-size: .8rem;
+  .product-allergy-tag {
+    font-size: 0.8rem;
     font-weight: 300;
-    width:fit-content;
+    width: fit-content;
     background-color: var(--primary-300);
     color: #fff;
     padding: 0.4rem 0.6rem;

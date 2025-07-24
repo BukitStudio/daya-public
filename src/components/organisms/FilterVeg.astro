@@ -1,0 +1,52 @@
+---
+import SwitchVeg from "../atoms/SwitchVeg.astro";
+---
+
+<div class="filter-switch-container narrow">
+ <p>Mode végétarien</p> 
+ <SwitchVeg id="filter-switch" />
+</div>
+
+<style>
+.filter-switch-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    -webkit-tap-highlight-color: transparent;
+}
+@media screen and (max-width: 768px) {
+  .filter-switch-container {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+</style>
+
+<script>
+  // Client-side filtering: re-render the list instead of hiding items
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterSwitch = document.getElementById('filter-switch') as HTMLInputElement | null;
+    const productsList = document.getElementById('products-list') as HTMLUListElement | null;
+    if (!filterSwitch || !productsList) return;
+    // Save all products as HTML
+    const allLis = Array.from(productsList.children).map(li => li.cloneNode(true) as HTMLLIElement);
+    function isVegCategory(li: HTMLLIElement): boolean {
+      return li.dataset.category !== undefined && li.dataset.category.includes('veg');
+    }
+    function updateFilter(): void {
+      if (!productsList || !filterSwitch) return;
+      productsList.innerHTML = '';
+      if (!filterSwitch.checked) {
+        allLis.forEach(li => productsList.appendChild(li.cloneNode(true)));
+      } else {
+        allLis.forEach(li => {
+          if (isVegCategory(li)) productsList.appendChild(li.cloneNode(true));
+        });
+      }
+    }
+    filterSwitch.addEventListener('change', updateFilter);
+    if (filterSwitch.checked) updateFilter();
+  });
+</script>
