@@ -1,0 +1,60 @@
+---
+import { fetchProductsSheet } from "../../data/fetchProductsSheet";
+import ProductCard from "../molecules/ProductCard.astro";
+import FoodNav from "./FoodNav.astro";
+import FilterVeg from "./FilterVeg.astro";
+import type { Product } from "../../data/productsSchema";
+const products: Product[] = await fetchProductsSheet();
+
+// Group products by type
+const grouped: Record<string, Product[]> = {};
+for (const product of products) {
+  const type: string = product.type?.split(",")[0]?.trim() || "Autres";
+  if (!grouped[type]) grouped[type] = [];
+  grouped[type].push(product);
+}
+const types: string[] = Object.keys(grouped);
+---
+
+<FilterVeg />
+<FoodNav categories={types} />
+
+
+{types.map((type: string) => (
+  <section id={`cat-${type.toLowerCase().replace(/\s+/g, '-')}`} class="product-section">
+    <h2 class="category-title narrow">{type}</h2>
+    <ul  class="products-list">
+      {grouped[type].map((product: Product, idx: number) => (
+        <li data-idx={idx} data-category={product.category ? product.category.toLowerCase() : ''}>
+          <ProductCard product={product} />
+        </li>
+      ))}
+    </ul>
+  </section>
+))}
+
+<style>
+
+
+
+  .products-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 320px));
+    gap: 1rem;
+    row-gap: 3.5rem;
+    justify-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    margin: 0 auto;
+    max-width: 760px;
+    min-width: 0;
+  }
+
+  .products-list li {
+    list-style: none;
+    width: 100%;
+    min-width: 0;
+  }
+
+  </style>
+

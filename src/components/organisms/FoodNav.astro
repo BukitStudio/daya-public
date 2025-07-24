@@ -1,60 +1,41 @@
 ---
 import FoodIcon from "../atoms/icons/FoodIcon.astro";
 
----
+const categories: string[] = Astro.props.categories ?? [];
+// Map display/type names to FoodIcon keys
+const iconMap: Record<string, string> = {
+  "Nem": "nem",
+  "Bobun": "bobun",
+  "Sandwich": "sandwich",
+  "Sandwich Banh Mi": "sandwich",
+  "Burger": "burger",
+  "Burger Banh Mi": "burger",
+  "Plat principal": "plat",
+  "Menu enfant": "kid",
+  "Menu Enfant": "kid",
+  "Dessert": "dessert",
+  "Accompagnement": "side",
+  "Boisson": "boisson"
+};
 
+---
 <nav class="food-nav hide-on-scroll">
   <div class="food-tags narrow">
     <ul>
-      <li>
-        <a class="food-link" href="#nem">
-          <FoodIcon icon="nem" ariaLabel="Nem" />Nem</a
-        >
-      </li>
-      <li>
-        <a class="food-link" href="#bobun">
-          <FoodIcon icon="bobun" ariaLabel="Bobun" />Bobun
-        </a>
-      </li>
-      <li>
-        <a class="food-link" href="#sandwich">
-          <FoodIcon icon="sandwich" ariaLabel="Sandwich" />Sandwich</a
-        >
-      </li>
-      <li>
-        <a class="food-link" href="#burger">
-          <FoodIcon icon="burger" ariaLabel="Burger" />Burger</a
-        >
-      </li>
-      <li>
-        <a class="food-link" href="#plat">
-          <FoodIcon icon="plat" ariaLabel="Plat principal" />Plat principal</a
-        >
-      </li>
-      <li>
-        <a class="food-link" href="#kid">
-          <FoodIcon icon="kid" ariaLabel="Menu enfant" />Menu enfant</a
-        >
-      </li>
-      <li>
-        <a class="food-link" href="#dessert">
-          <FoodIcon icon="dessert" ariaLabel="Dessert" />Dessert</a
-        >
-      </li>
-      <li>
-        <a class="food-link" href="#side">
-          <FoodIcon icon="side" ariaLabel="Accompagnement" />Side</a
-        >
-      </li>
-      <li>
-        <a class="food-link" href="#boisson">
-          <FoodIcon icon="boisson" ariaLabel="Boisson" />Boisson</a
-        >
-      </li>
+      {categories.map((cat: string) => {
+        const iconSlug = iconMap[cat] ?? cat.toLowerCase().replace(/\s+/g, '');
+        return (
+          <li>
+            <a class="food-link" href={`#cat-${cat.toLowerCase().replace(/\s+/g, '-')}`}>
+              <FoodIcon icon={iconSlug} ariaLabel={cat} />
+              {cat}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   </div>
 </nav>
-
 <style>
  .food-nav {
     display: flex;
@@ -81,11 +62,12 @@ import FoodIcon from "../atoms/icons/FoodIcon.astro";
 
   .food-link {
     display: flex;
+    align-items: center;
+    line-height: 1;
     width: fit-content;
     height: 50px;
     gap: 0.8rem;
     flex-direction: row;
-    align-items: center;
     justify-content: center;
     border-radius: 999px;
     padding: 0.6rem 1.3rem;
@@ -93,9 +75,9 @@ import FoodIcon from "../atoms/icons/FoodIcon.astro";
     text-decoration: none;
     white-space: nowrap;
     flex: 0 0 auto;
-    color: var(--primary-700);
+    color: var(--secondary-700);
     border: 1px solid var(--primary-700);
-  
+    background-color: var(--primary-500);
   }
 
 .food-link:active{
@@ -118,7 +100,9 @@ import FoodIcon from "../atoms/icons/FoodIcon.astro";
   width: 2rem;
   height: 2rem;
   display: block;
-  vertical-align: middle;
+  flex-shrink: 0;
+  min-width: 2rem;
+  min-height: 2rem;
 }
 
   .food-link:hover {
@@ -141,16 +125,13 @@ import FoodIcon from "../atoms/icons/FoodIcon.astro";
       width: 100vw;
       z-index: 1000;
       margin: 0;
-      padding: 1rem 0 1rem 0;
- 
+      padding: 1.5rem 0 1.5rem 0;
       box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.10);
       background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(16px) saturate(180%);
       -webkit-backdrop-filter: blur(16px) saturate(180%);
       border-top: 1.5px solid rgba(255,255,255,0.35);
-    
       transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s cubic-bezier(0.4,0,0.2,1);
-      /* Optional: subtle inner shadow for depth */
       box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.10), inset 0 1px 8px 0 rgba(255,255,255,0.10);
     }
     .food-nav.hide-on-scroll {

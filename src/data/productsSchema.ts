@@ -17,6 +17,7 @@ export const ProductSchema = z.object({
   }, z.number()),
   image: z.string().url().optional(),
   category: z.string().optional(),
+  type: z.string().optional(),
   vegan: z.string().optional(),
 });
 

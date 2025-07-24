@@ -2,9 +2,10 @@
 import SwitchVeg from "../atoms/SwitchVeg.astro";
 ---
 
+
 <div class="filter-switch-container narrow">
- <p>Mode végétarien</p> 
- <SwitchVeg id="filter-switch" />
+  <p>Mode végétarien</p>
+  <SwitchVeg id="filter-switch" />
 </div>
 
 <style>
@@ -22,31 +23,43 @@ import SwitchVeg from "../atoms/SwitchVeg.astro";
   }
 }
 
+
 </style>
 
 <script>
-  // Client-side filtering: re-render the list instead of hiding items
-  document.addEventListener('DOMContentLoaded', function() {
-    const filterSwitch = document.getElementById('filter-switch') as HTMLInputElement | null;
-    const productsList = document.getElementById('products-list') as HTMLUListElement | null;
-    if (!filterSwitch || !productsList) return;
-    // Save all products as HTML
-    const allLis = Array.from(productsList.children).map(li => li.cloneNode(true) as HTMLLIElement);
-    function isVegCategory(li: HTMLLIElement): boolean {
-      return li.dataset.category !== undefined && li.dataset.category.includes('veg');
+// Wait for DOM and Astro hydration
+window.addEventListener('DOMContentLoaded', function() {
+  // Use setTimeout to ensure SwitchVeg is rendered
+  setTimeout(function() {
+    const filterSwitch = document.getElementById('filter-switch');
+    if (!filterSwitch || filterSwitch.tagName !== 'INPUT') return;
+    const checkbox = filterSwitch as HTMLInputElement;
+    function updateFilter() {
+      // Select all product <li> elements directly under .products-list
+      const items = document.querySelectorAll('.products-list > li');
+      items.forEach(li => {
+        const item = li as HTMLElement;
+        const cat = item.dataset.category || '';
+        if (!(checkbox as HTMLInputElement).checked) {
+          item.classList.remove('hidden-product');
+        } else {
+          if (cat.includes('veg')) {
+            item.classList.remove('hidden-product');
+          } else {
+            item.classList.add('hidden-product');
+          }
+        }
+      });
     }
-    function updateFilter(): void {
-      if (!productsList || !filterSwitch) return;
-      productsList.innerHTML = '';
-      if (!filterSwitch.checked) {
-        allLis.forEach(li => productsList.appendChild(li.cloneNode(true)));
-      } else {
-        allLis.forEach(li => {
-          if (isVegCategory(li)) productsList.appendChild(li.cloneNode(true));
-        });
-      }
-    }
-    filterSwitch.addEventListener('change', updateFilter);
-    if (filterSwitch.checked) updateFilter();
-  });
+    checkbox.addEventListener('change', updateFilter);
+    // Initial state
+    updateFilter();
+  }, 0);
+});
 </script>
+
+<style>
+:global(.hidden-product) {
+  display: none !important;
+}
+</style>
