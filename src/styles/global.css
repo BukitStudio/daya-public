@@ -164,13 +164,13 @@ body {
   flex-direction: column;
   padding: 3rem 2rem 0rem 2rem;
   gap: 2rem;
-  max-width: 800px;
+  max-width: 100ch;
   margin: 0 auto;
 }
 
 .narrow {
-  padding: 3rem 2rem 0rem 2rem;
-  max-width: 600px;
+
+  max-width: 80ch;
   margin: 0 auto;
 }
 

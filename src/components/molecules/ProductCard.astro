@@ -100,17 +100,17 @@ const { product } = Astro.props as { product: Product };
   .product-image {
     width: 100%;
     aspect-ratio: 1 / 1;
-   height: auto;
+    height: auto;
     border-radius: 1rem;
     object-fit: cover;
-    background: #f8f8f8;
+    background: var(--primary-400);
     display: block;
   }
   .product-image-container {
     position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
-
+    background: var(--primary-400);
   }
 
 .product-category-container {
