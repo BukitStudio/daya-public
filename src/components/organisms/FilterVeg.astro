@@ -2,27 +2,39 @@
 import SwitchVeg from "../atoms/SwitchVeg.astro";
 ---
 
+<div class ="filter-switch-container ">
 
-<div class="filter-switch-container narrow">
-  <p>Mode végétarien</p>
+<div class="filter-switch narrow">
+  <p class="mb0">Mode végétarien</p>
   <SwitchVeg id="filter-switch" />
 </div>
 
+</div>
 <style>
-.filter-switch-container{
+  .filter-switch-container{
+    background: var(--primary-700);
+    padding: 1rem 2rem;
+
+  }
+  .filter-switch{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: none;
     -webkit-tap-highlight-color: transparent;
 }
 @media screen and (max-width: 768px) {
-  .filter-switch-container {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+  
+    .filter-switch-container{
+    padding: 0.5rem 1rem;
+
   }
+
 }
 
+
+:global(.hidden-product) {
+  display: none !important;
+}
 
 </style>
 
@@ -58,8 +70,3 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<style>
-:global(.hidden-product) {
-  display: none !important;
-}
-</style>

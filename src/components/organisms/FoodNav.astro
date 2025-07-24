@@ -4,46 +4,62 @@ import FoodIcon from "../atoms/icons/FoodIcon.astro";
 const categories: string[] = Astro.props.categories ?? [];
 // Map display/type names to FoodIcon keys
 const iconMap: Record<string, string> = {
-  "Nem": "nem",
-  "Bobun": "bobun",
-  "Sandwich": "sandwich",
+  Nem: "nem",
+  Bobun: "bobun",
+  Sandwich: "sandwich",
   "Sandwich Banh Mi": "sandwich",
-  "Burger": "burger",
+  Burger: "burger",
   "Burger Banh Mi": "burger",
   "Plat principal": "plat",
   "Menu enfant": "kid",
   "Menu Enfant": "kid",
-  "Dessert": "dessert",
-  "Accompagnement": "side",
-  "Boisson": "boisson"
+  Dessert: "dessert",
+  Accompagnement: "side",
+  Boisson: "boisson",
 };
-
 ---
-<nav class="food-nav hide-on-scroll">
+
+<nav class="food-nav">
   <div class="food-tags narrow">
     <ul>
-      {categories.map((cat: string) => {
-        const iconSlug = iconMap[cat] ?? cat.toLowerCase().replace(/\s+/g, '');
-        return (
-          <li>
-            <a class="food-link" href={`#cat-${cat.toLowerCase().replace(/\s+/g, '-')}`}>
-              <FoodIcon icon={iconSlug} ariaLabel={cat} />
-              {cat}
-            </a>
-          </li>
-        );
-      })}
+      {
+        categories.map((cat: string) => {
+          const iconSlug =
+            iconMap[cat] ?? cat.toLowerCase().replace(/\s+/g, "");
+          return (
+            <li>
+              <a
+                class="food-link"
+                href={`#cat-${cat.toLowerCase().replace(/\s+/g, "-")}`}
+              >
+                <FoodIcon icon={iconSlug} ariaLabel={cat} />
+                {cat}
+              </a>
+            </li>
+          );
+        })
+      }
     </ul>
   </div>
 </nav>
 <style>
- .food-nav {
+  .food-nav {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--primary-600);
+  
     padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 16px 0 rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    box-shadow:
+      0 -2px 16px 0 rgba(0, 0, 0, 0.1),
+      inset 0 1px 8px 0 rgba(255, 255, 255, 0.1);
   }
 
   .food-tags ul {
@@ -56,38 +72,32 @@ const iconMap: Record<string, string> = {
     justify-content: center;
   }
 
-    .food-tags ul li{
-        flex: 0 0 auto;
-     }
-
   .food-link {
     display: flex;
     align-items: center;
-    line-height: 1;
     width: fit-content;
-    height: 50px;
+    height: fit-content;
     gap: 0.8rem;
     flex-direction: row;
     justify-content: center;
     border-radius: 999px;
     padding: 0.6rem 1.3rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
     text-decoration: none;
     white-space: nowrap;
-    flex: 0 0 auto;
+
     color: var(--secondary-700);
-    border: 1px solid var(--primary-700);
     background-color: var(--primary-500);
   }
 
-.food-link:active{
+  .food-link.active {
     background-color: var(--secondary-500);
     color: var(--primary-500);
   }
 
   .food-link:hover {
     color: var(--primary-700);
-    background-color: var(--primary-500);
+    background-color: var(--secondary-500);
   }
 
   .food-link:focus-visible {
@@ -96,128 +106,88 @@ const iconMap: Record<string, string> = {
   }
 
 
-.food-link svg {
-  width: 2rem;
-  height: 2rem;
-  display: block;
-  flex-shrink: 0;
-  min-width: 2rem;
-  min-height: 2rem;
-}
 
-  .food-link:hover {
-    color: var(--primary-700);
-    background-color: var(--primary-500);
-  }
-
-  .food-link:focus-visible {
-    outline: 2px solid var(--primary-700);
-    outline-offset: 2px;
+  .food-link svg {
+    min-width: 2rem;
+    min-height: 2rem;
   }
 
   @media screen and (max-width: 768px) {
     .food-nav {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: auto;
+      overflow: hidden;
       width: 100vw;
       z-index: 1000;
       margin: 0;
       padding: 1.5rem 0 1.5rem 0;
-      box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.10);
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border-top: 1.5px solid rgba(255,255,255,0.35);
-      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s cubic-bezier(0.4,0,0.2,1);
-      box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.10), inset 0 1px 8px 0 rgba(255,255,255,0.10);
     }
-    .food-nav.hide-on-scroll {
-      transform: translateY(100%);
-      opacity: 0;
-      pointer-events: none;
-    }
+
     .food-tags.narrow {
-       all: unset;
-       height: fit-content;
-   
+      all: unset;
+      height: fit-content;
     }
-      .food-tags {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-  }
+
     .food-tags ul {
-          width: 90%;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+      width: 100vw;
       display: flex;
+      justify-content: flex-start;
       flex-wrap: nowrap;
-      flex-direction: row;
-      align-items: center;
-      padding: 0rem 1rem        ;
-    justify-content: flex-start;
-      gap: 1rem;
-      overflow-x: scroll;
+      overflow-x: auto;
       overflow-y: hidden;
-      
+      gap: 1rem;
+      padding: 0 1rem;
+      margin: 0;
     }
-       
-    
+
     .food-tags ul::-webkit-scrollbar {
-  display: none;
-}
+      display: none;
+    }
   }
-
-
-  
-
-
-
 </style>
 
-
-
-
 <script>
-  if (typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches) {
+  if (typeof window !== 'undefined') {
     document.addEventListener('DOMContentLoaded', function() {
-      const nav = document.querySelector('.food-nav');
-      let lastScrollY = window.scrollY;
-      let ticking = false;
-      let hideTimeout: ReturnType<typeof setTimeout> | null = null;
-      function onScroll() {
-        if (!nav) return;
-        const currentScrollY = window.scrollY;
-        if (hideTimeout) clearTimeout(hideTimeout);
-        hideTimeout = setTimeout(() => {
-          if (currentScrollY < 50) {
-            nav.classList.remove('hide-on-scroll');
-          } else if (currentScrollY < lastScrollY) {
-            nav.classList.add('hide-on-scroll'); // hide on scroll up
-          } else {
-            nav.classList.remove('hide-on-scroll'); // show on scroll down
+      const links = Array.from(document.querySelectorAll('.food-link')) as HTMLAnchorElement[];
+      const sections = Array.from(document.querySelectorAll('section[id^="cat-"]')) as HTMLElement[];
+      console.log('FoodNav debug: found links', links.map(l => l.hash));
+      console.log('FoodNav debug: found sections', sections.map(s => s.id));
+      function setActive(link: HTMLAnchorElement | null) {
+        links.forEach(l => l.classList.remove('active'));
+        if (link) {
+          link.classList.add('active');
+          // Center active link in scroll container on mobile
+          const ul = link.closest('ul');
+          if (ul && window.innerWidth <= 768) {
+            // Use scrollIntoView with block: 'nearest' to avoid vertical jump
+            link.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
           }
-          lastScrollY = currentScrollY;
-          ticking = false;
-        }, 250); // 250ms delay
-      }
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          window.requestAnimationFrame(onScroll);
-          ticking = true;
         }
+      }
+      const observer = new window.IntersectionObserver((entries) => {
+        let mostVisible: HTMLElement | null = null;
+        let maxTop = -Infinity;
+        entries.forEach(entry => {
+          const target = entry.target as HTMLElement;
+          if (entry.isIntersecting && target.getBoundingClientRect().top > maxTop) {
+            mostVisible = target;
+            maxTop = target.getBoundingClientRect().top;
+          }
+        });
+        if (mostVisible) {
+          const id = mostVisible.id;
+          const activeLink = links.find(link => link.hash === `#${id}`);
+          console.log('FoodNav debug: mostVisible', id, 'activeLink', activeLink);
+          setActive(activeLink ?? null);
+        }
+      }, {
+        rootMargin: '-51px 0px 0px 0px',
+        threshold: 0.1
       });
-      // Hide at bottom initially
-      if (nav) nav.classList.add('hide-on-scroll');
+      sections.forEach(section => observer.observe(section));
+      // Set active on click for instant feedback
+      links.forEach(link => {
+        link.addEventListener('click', () => setActive(link));
+      });
     });
   }
 </script>

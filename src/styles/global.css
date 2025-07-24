@@ -1,4 +1,8 @@
 
+[id^="cat-"] {
+  scroll-margin-top: 90px;
+}
+
 body {
   background: var(--primary-500);
   color: var(--secondary-500);
@@ -160,10 +164,7 @@ body {
 
 
 .wide {
-  display: flex;
-  flex-direction: column;
-  padding: 3rem 2rem 0rem 2rem;
-  gap: 2rem;
+
   max-width: 100ch;
   margin: 0 auto;
 }
