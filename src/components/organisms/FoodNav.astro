@@ -163,7 +163,6 @@ const iconMap: Record<string, string> = {
         "FoodNav debug: found sections",
         sections.map((s) => s.id)
       );
-      let isClickingNav = false;
       function setActive(link: HTMLAnchorElement | null) {
         links.forEach((l) => l.classList.remove("active"));
         if (link) {
@@ -181,7 +180,6 @@ const iconMap: Record<string, string> = {
       }
       const observer = new window.IntersectionObserver(
         (entries) => {
-          if (isClickingNav) return;
           // Find the visible section closest to the top (smallest positive top)
           let closest: HTMLElement | null = null;
           let minTop = Infinity;
@@ -207,14 +205,17 @@ const iconMap: Record<string, string> = {
         }
       );
       sections.forEach((section) => observer.observe(section));
-      // Set active on click for instant feedback
+      // Set active on click for instant feedback, then let IntersectionObserver take over
       links.forEach((link) => {
-        link.addEventListener("click", () => {
-          isClickingNav = true;
+        link.addEventListener("click", (e) => {
+          // Prevent default jump to allow smooth scroll
+          e.preventDefault();
           setActive(link);
-          setTimeout(() => {
-            isClickingNav = false;
-          }, 600);
+          const sectionId = link.getAttribute('href')?.replace('#', '');
+          const el = document.getElementById(sectionId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
         });
       });
     });

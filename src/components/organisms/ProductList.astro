@@ -3,6 +3,9 @@ import { fetchProductsSheet } from "../../data/fetchProductsSheet";
 import ProductCard from "../molecules/ProductCard.astro";
 import FoodNav from "./FoodNav.astro";
 import FilterVeg from "./FilterVeg.astro";
+import BtnLink from "../molecules/BtnLink.astro";
+import Info from "../../data/info.json";
+import ClickCollectIcon from "../../assets/icons/clickCollect.svg";
 import type { Product } from "../../data/productsSchema";
 const products: Product[] = await fetchProductsSheet();
 
@@ -17,27 +20,64 @@ const types: string[] = Object.keys(grouped);
 ---
 
 
-<FoodNav categories={types} />
-<FilterVeg />
 
-{types.map((type: string) => (
-  <section id={`${type.toLowerCase().replace(/\s+/g, '-')}`} class="product-section pt2">
-    <h2 class=" h4 category narrow center">{type}</h2>
-    <ul  class="products-list">
-      {grouped[type].map((product: Product, idx: number) => (
-        <li data-idx={idx} data-category={product.category ? product.category.toLowerCase() : ''}>
-          <ProductCard product={product} />
-        </li>
-      ))}
-    </ul>
-  </section>
-))}
+<div class="product-list-container">
+  <FoodNav categories={types} />
+  <FilterVeg />
+
+  {types.map((type: string) => (
+    <section id={`${type.toLowerCase().replace(/\s+/g, '-')}`} class="product-section pt2">
+      <h2 id="category-subtitle" class=" h4 category narrow center">{type}</h2>
+      <ul  class="products-list">
+        {grouped[type].map((product: Product, idx: number) => (
+          <li data-idx={idx} data-category={product.category ? product.category.toLowerCase() : ''}>
+            <ProductCard product={product} />
+          </li>
+        ))}
+      </ul>
+
+
+
+    </section>
+  ))}
+ 
+ <BtnLink
+    href={Info.clickCollect}
+    background="#E84349"
+    color="#fff"
+    ariaLabel="Click and Collect"
+    icon={ClickCollectIcon}
+    text="Click & Collect"
+    class="btn-link click-collect-btn"
+
+  />
+
+
+</div>
+
+
 
 <style>
 
 
 
+.click-collect-btn {
+  position: sticky;
+  font-size: 1.5rem;
+  left: 0;
+  right: 0;
+  border-radius: 999px;
+  bottom: 1rem;
+  width: 30%;
+  height: 60px;
+  margin: 0 auto;
+  z-index: 1000;
+  transition: opacity 0.2s, visibility 0.2s;
+
+}
+
   .products-list {
+
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(0, 320px));
     gap: 1rem;
@@ -53,8 +93,48 @@ const types: string[] = Object.keys(grouped);
     list-style: none;
     width: 100%;
     min-width: 0;
+
   }
 
+
+  #category-subtitle {
+    font-weight: 600;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--primary-500);
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: fit-content;
+  }
+  .category:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) skewX(-10deg);
+    width: calc(100% + 1.5rem);
+border-radius: .5rem;
+    height: 150%;
+    background: var(--secondary-500);
+    z-index: -1;
+  }
+  @media screen and (max-width: 768px) {
+ .click-collect-btn {
+  position: sticky;
+  font-size: 1.5rem;
+  left: 0;
+  right: 0;
+  border-radius: 0px;
+  bottom: 0rem;
+  width: 100%;
+  height: 60px;
+  margin: 0 auto;
+  z-index: 1000;
+  transition: opacity 0.2s, visibility 0.2s;
+
+}
+  }
 
   </style>
 
