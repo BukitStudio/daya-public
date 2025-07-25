@@ -40,7 +40,7 @@ footer, header, hgroup, menu, nav, section {
 
 :focus,
 :focus-visible {
-  outline: 2px solid blue;
+  outline: 2px solid var(--secondary-500);
   outline-offset: 2px;
 }
 

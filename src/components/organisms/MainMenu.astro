@@ -134,10 +134,17 @@ import MailIcon from "../../assets/icons/social/mail.svg";
       margin-bottom: 0;
     }
 
-    .main-menu a:hover,
-    .main-menu a:focus {
-      background: var(--primary-500);
-    }
+.main-menu a:hover {
+  box-shadow: 0 4px 24px 0 rgba(6, 43, 33, 0.471), 0 1.5px 8px 0 rgba(1, 29, 22, 0.725);
+  transform: translateY(-2px) scale(1.01);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.main-menu-links a:focus-visible {
+    outline: 2px solid var(--secondary-500);
+    outline-offset: 2px;
+  }
+
 
     .main-menu-info {
       display: flex;
