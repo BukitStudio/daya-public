@@ -1,15 +1,32 @@
 ---
 import LogoDayaType from "../atoms/LogoDayaType.astro";
 import Info from "../../data/info.json";
+import InstagramIcon from "../../assets/icons/social/insta.svg";
+import FacebookIcon from "../../assets/icons/social/facebook.svg";
+import MailIcon from "../../assets/icons/social/mail.svg";
 ---
 
 <footer class="footer">
   <div class="footer-brand">
-    <LogoDayaType width=200 class="mb1"  />
+    <a href="/" aria-label="Accueil">
+      <LogoDayaType width=250 />
+    </a>
 
-    <p>{Info.address}</p>
-    <p class="neutral-500 center">  <span set:html={Info.operatingHours.replace(/\n/g, "<br />")} />
-</p>
+    <div class="social-links">
+      <a href={Info.insta} target="_blank" rel="noopener noreferrer">
+        <InstagramIcon />
+      </a>
+      <a href={Info.facebook} target="_blank" rel="noopener noreferrer">
+        <FacebookIcon />
+      </a>
+      <a href={`mailto:${Info.email}`} target="_blank" rel="noopener noreferrer">
+        <MailIcon />
+      </a>
+    </div>
+      <p class="bold center mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer">{Info.address}</a></p>
+      <p class="center neutral-500">{Info.operatingHours}</p>
+    </div> 
+    
 
 
 </div>
@@ -42,17 +59,46 @@ import Info from "../../data/info.json";
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0rem;
+    gap: 1.5rem;
     margin:auto;
 
     max-width: 40ch;
     padding: 6rem 1rem;
   }
 
-.footer-credits {
+    .social-links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+.social-links svg{
+    width:2rem;
+}
+  .footer-credits {
   padding: 1rem 2rem;
   background-color: var(--primary-500);
 }
+
+
+
+/* .logo-daya-type{
+  filter: none;
+  transition: filter 0.3s;
+}
+
+.logo-daya-type:hover {
+  filter: drop-shadow(0 0 2px var(--primary-500)) drop-shadow(0 0 8px var(--secondary-500)) brightness(1.15);
+} */
+
+   /* svg:hover {
+    filter: drop-shadow(0 0 2px var(--primary-500)) drop-shadow(0 0 8px var(--secondary-500));
+    transition: filter 0.3s;
+      filter: brightness(1.15) drop-shadow(0 0 8px var(--primary-500));
+
+  } */
 
 </style>
 
