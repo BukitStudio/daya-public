@@ -30,7 +30,7 @@ const iconMap: Record<string, string> = {
             <li>
               <a
                 class="food-link"
-                href={`#cat-${cat.toLowerCase().replace(/\s+/g, "-")}`}
+                href={`#${cat.toLowerCase().replace(/\s+/g, "-")}`}
               >
                 <FoodIcon icon={iconSlug} ariaLabel={cat} />
                 {cat}
@@ -48,18 +48,18 @@ const iconMap: Record<string, string> = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  
-    padding: 1rem;
+
+    padding: 0rem;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 -2px 16px 0 rgba(0, 0, 0, 0.1);
+
     background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    /* backdrop-filter: blur(16px) saturate(180%); */
+    /* -webkit-backdrop-filter: blur(16px) saturate(180%);
     box-shadow:
       0 -2px 16px 0 rgba(0, 0, 0, 0.1),
-      inset 0 1px 8px 0 rgba(255, 255, 255, 0.1);
+      inset 0 1px 8px 0 rgba(255, 255, 255, 0.1); */
   }
 
   .food-tags ul {
@@ -70,19 +70,19 @@ const iconMap: Record<string, string> = {
     gap: 0.5rem;
     padding: 1rem;
     justify-content: center;
+    scroll-behavior: smooth;
   }
 
   .food-link {
     display: flex;
     align-items: center;
     width: fit-content;
-    height: fit-content;
     gap: 0.8rem;
     flex-direction: row;
     justify-content: center;
-    border-radius: 999px;
+    border-radius: .5rem;
     padding: 0.6rem 1.3rem;
-    font-size: 1rem;
+
     text-decoration: none;
     white-space: nowrap;
 
@@ -96,16 +96,14 @@ const iconMap: Record<string, string> = {
   }
 
   .food-link:hover {
-    color: var(--primary-700);
-    background-color: var(--secondary-500);
+   background-color: var(--secondary-500);
+    color: var(--primary-500);
   }
 
   .food-link:focus-visible {
     outline: 2px solid var(--primary-700);
     outline-offset: 2px;
   }
-
-
 
   .food-link svg {
     min-width: 2rem;
@@ -123,7 +121,6 @@ const iconMap: Record<string, string> = {
 
     .food-tags.narrow {
       all: unset;
-      height: fit-content;
     }
 
     .food-tags ul {
@@ -145,48 +142,80 @@ const iconMap: Record<string, string> = {
 </style>
 
 <script>
-  if (typeof window !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', function() {
-      const links = Array.from(document.querySelectorAll('.food-link')) as HTMLAnchorElement[];
-      const sections = Array.from(document.querySelectorAll('section[id^="cat-"]')) as HTMLElement[];
-      console.log('FoodNav debug: found links', links.map(l => l.hash));
-      console.log('FoodNav debug: found sections', sections.map(s => s.id));
+  if (typeof window !== "undefined") {
+  
+    // Use native scrollIntoView for smooth scrolling to section
+    document.addEventListener("DOMContentLoaded", function () {
+      const links = Array.from(
+        document.querySelectorAll(".food-link")
+      ) as HTMLAnchorElement[];
+      // Select sections with id matching nav hashes
+      const sections = Array.from(
+        document.querySelectorAll("section[id]")
+      ).filter((s) =>
+        links.some((l) => l.hash === `#${s.id}`)
+      ) as HTMLElement[];
+      console.log(
+        "FoodNav debug: found links",
+        links.map((l) => l.hash)
+      );
+      console.log(
+        "FoodNav debug: found sections",
+        sections.map((s) => s.id)
+      );
+      let isClickingNav = false;
       function setActive(link: HTMLAnchorElement | null) {
-        links.forEach(l => l.classList.remove('active'));
+        links.forEach((l) => l.classList.remove("active"));
         if (link) {
-          link.classList.add('active');
+          link.classList.add("active");
           // Center active link in scroll container on mobile
-          const ul = link.closest('ul');
+          const ul = link.closest("ul");
           if (ul && window.innerWidth <= 768) {
-            // Use scrollIntoView with block: 'nearest' to avoid vertical jump
-            link.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+            // Calculate scroll position to center the link
+            const ulRect = ul.getBoundingClientRect();
+            const linkRect = link.getBoundingClientRect();
+            const scrollLeft = ul.scrollLeft + (linkRect.left + linkRect.width / 2) - (ulRect.left + ulRect.width / 2);
+            ul.scrollTo({ left: scrollLeft, behavior: "smooth" });
           }
         }
       }
-      const observer = new window.IntersectionObserver((entries) => {
-        let mostVisible: HTMLElement | null = null;
-        let maxTop = -Infinity;
-        entries.forEach(entry => {
-          const target = entry.target as HTMLElement;
-          if (entry.isIntersecting && target.getBoundingClientRect().top > maxTop) {
-            mostVisible = target;
-            maxTop = target.getBoundingClientRect().top;
+      const observer = new window.IntersectionObserver(
+        (entries) => {
+          if (isClickingNav) return;
+          // Find the visible section closest to the top (smallest positive top)
+          let closest: HTMLElement | null = null;
+          let minTop = Infinity;
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const target = entry.target as HTMLElement;
+              const top = target.getBoundingClientRect().top;
+              if (top < minTop) {
+                minTop = top;
+                closest = target;
+              }
+            }
+          });
+          if (closest) {
+            const id = closest.id;
+            const activeLink = links.find((link) => link.hash === `#${id}`);
+            setActive(activeLink ?? null);
           }
-        });
-        if (mostVisible) {
-          const id = mostVisible.id;
-          const activeLink = links.find(link => link.hash === `#${id}`);
-          console.log('FoodNav debug: mostVisible', id, 'activeLink', activeLink);
-          setActive(activeLink ?? null);
+        },
+        {
+          rootMargin: "-150px 0px 0px 0px",
+          threshold: 0.1,
         }
-      }, {
-        rootMargin: '-51px 0px 0px 0px',
-        threshold: 0.1
-      });
-      sections.forEach(section => observer.observe(section));
+      );
+      sections.forEach((section) => observer.observe(section));
       // Set active on click for instant feedback
-      links.forEach(link => {
-        link.addEventListener('click', () => setActive(link));
+      links.forEach((link) => {
+        link.addEventListener("click", () => {
+          isClickingNav = true;
+          setActive(link);
+          setTimeout(() => {
+            isClickingNav = false;
+          }, 600);
+        });
       });
     });
   }

@@ -20,15 +20,11 @@ import LogoDaya from "../atoms/LogoDaya.astro";
     class="hero-image"
   />
 
-
   <div class="hero-overlay"></div>
   <div class="logo-container">
     <LogoDaya class="logo-daya" width="60%" />
   </div>
 </div>
-
-
-
 
 <style>
   .hero {
@@ -42,29 +38,13 @@ import LogoDaya from "../atoms/LogoDaya.astro";
     top: 0;
     left: 0;
     z-index: -1;
-      padding-left: 16px;
-  padding-right: 16px;
-}
-
-@media screen and (max-width: 768px) {
-    .hero {
-   width: 100%;
-    height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-      padding-left: 16px;
-  padding-right: 16px;
-    }
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
 
-.hero picture {
+
+  .hero picture {
     position: absolute;
     top: 0;
     left: 0;
@@ -81,19 +61,7 @@ import LogoDaya from "../atoms/LogoDaya.astro";
     object-fit: cover;
     display: block;
     transition: filter 0.15s linear;
-
   }
-  .hero-image.blur {
-    filter: blur(8px) ;
-  }
-:global(.logo-daya) {
-
-  transform: translateZ(0);
-  transition: filter 0.15s linear, opacity 0.15s linear;
-}
-  
-
-
 
   .hero-overlay {
     position: absolute;
@@ -107,11 +75,26 @@ import LogoDaya from "../atoms/LogoDaya.astro";
   }
   .logo-container {
     position: absolute;
- 
+
     display: flex;
     align-items: center;
     justify-content: center;
     transform: translateY(-60px);
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .hero {
+      height: 90vh;
+    }
+
+  .logo-container {
+   
+    transform: translateY(-120px);
+  }
+
 
   }
+
+
 </style>

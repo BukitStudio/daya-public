@@ -21,7 +21,7 @@ const types: string[] = Object.keys(grouped);
 <FilterVeg />
 
 {types.map((type: string) => (
-  <section id={`cat-${type.toLowerCase().replace(/\s+/g, '-')}`} class="product-section pt2">
+  <section id={`${type.toLowerCase().replace(/\s+/g, '-')}`} class="product-section pt2">
     <h2 class=" h4 category narrow center">{type}</h2>
     <ul  class="products-list">
       {grouped[type].map((product: Product, idx: number) => (
