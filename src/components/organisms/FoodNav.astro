@@ -20,7 +20,7 @@ const iconMap: Record<string, string> = {
 ---
 
 <nav class="food-nav">
-  <div class="food-tags narrow">
+  <div class="food-tags">
     <ul>
       {
         categories.map((cat: string) => {
@@ -70,7 +70,6 @@ const iconMap: Record<string, string> = {
     gap: 0.5rem;
     padding: 1rem;
     justify-content: center;
-    scroll-behavior: smooth;
   }
 
   .food-link {
@@ -133,6 +132,8 @@ const iconMap: Record<string, string> = {
       gap: 1rem;
       padding: 0 1rem;
       margin: 0;
+          scroll-behavior: smooth;
+
     }
 
     .food-tags ul::-webkit-scrollbar {

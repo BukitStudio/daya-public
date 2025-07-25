@@ -21,7 +21,7 @@ const types: string[] = Object.keys(grouped);
 
 
 
-<div class="product-list-container">
+<div class="product-list-container pb3">
   <FoodNav categories={types} />
   <FilterVeg />
 
@@ -41,6 +41,7 @@ const types: string[] = Object.keys(grouped);
     </section>
   ))}
  
+
  <BtnLink
     href={Info.clickCollect}
     background="#E84349"
@@ -49,8 +50,9 @@ const types: string[] = Object.keys(grouped);
     icon={ClickCollectIcon}
     text="Click & Collect"
     class="btn-link click-collect-btn"
-
   />
+
+
 
 
 </div>
@@ -58,6 +60,8 @@ const types: string[] = Object.keys(grouped);
 
 
 <style>
+
+
 
 
 
@@ -72,8 +76,15 @@ const types: string[] = Object.keys(grouped);
   height: 60px;
   margin: 0 auto;
   z-index: 1000;
-  transition: opacity 0.2s, visibility 0.2s;
-
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(40px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.click-collect-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
   .products-list {
@@ -138,3 +149,18 @@ border-radius: .5rem;
 
   </style>
 
+<script>
+  // Show .click-collect-btn after 1000px scroll with fade-in-up
+  const btn = document.querySelector('.click-collect-btn');
+  function toggleBtn() {
+    if (!btn) return;
+    if (window.scrollY > 500) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  }
+  window.addEventListener('scroll', toggleBtn);
+  // Initial check
+  toggleBtn();
+</script>
