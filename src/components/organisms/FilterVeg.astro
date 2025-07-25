@@ -5,7 +5,7 @@ import SwitchVeg from "../atoms/SwitchVeg.astro";
 <div class ="filter-switch-container ">
 
 <div class="filter-switch narrow">
-  <p class="mb0">Mode végétarien</p>
+  <p class="mb0">Mode végétarien <span id="veg-mode-status" ></span></p>
   <SwitchVeg id="filter-switch" />
 </div>
 
@@ -62,6 +62,11 @@ window.addEventListener('DOMContentLoaded', function() {
           }
         }
       });
+      // Update veg mode status
+      const status = document.getElementById('veg-mode-status');
+      if (status) {
+        status.textContent = checkbox.checked ? 'on' : 'off';
+      }
     }
     checkbox.addEventListener('change', updateFilter);
     // Initial state
