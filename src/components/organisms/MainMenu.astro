@@ -1,0 +1,165 @@
+---
+import BtnLink from "../molecules/BtnLink.astro";
+import Info from "../../data/info.json";
+import ClickCollectIcon from "../../assets/icons/clickCollect.svg";
+import WhatsappIcon from "../../assets/icons/whatsapp.svg";
+import GmapsIcon from "../../assets/icons/gmaps.svg";
+import WazeIcon from "../../assets/icons/waze.svg";
+import FacebookIcon from "../../assets/icons/social/facebook.svg";
+import InstagramIcon from "../../assets/icons/social/insta.svg";
+import MailIcon from "../../assets/icons/social/mail.svg";
+---
+
+<ul id="main-menu" class="main-menu" tabindex="-1" hidden>
+  <div class="main-menu-links">
+    <p class="uppercase">Commander</p>
+    <li>
+      <BtnLink
+        href={Info.clickCollect}
+        background="#E84349"
+        color="#fff"
+        ariaLabel="Click and Collect"
+        icon={ClickCollectIcon}
+        text="Click & Collect"
+      />
+    </li>
+
+    <li>
+      <BtnLink
+        href={Info["order-tel"]}
+        background="#28D366"
+        color="#000000"
+        ariaLabel="WhatsApp"
+        icon={WhatsappIcon}
+        text="WhatsApp"
+      />
+    </li>
+
+    <p class="uppercase">Nous trouver</p>
+    <li>
+      <BtnLink
+        href={Info.gmaps}
+        background="#F6F6F6"
+        color="#404040"
+        ariaLabel="Google Maps"
+        icon={GmapsIcon}
+        text="Google Maps"
+        iconSize="1em"
+      />
+    </li>
+    <li>
+      <BtnLink
+        href={Info.waze}
+        background="#3CCEFE"
+        color="#000000"
+        ariaLabel="Waze"
+        icon={WazeIcon}
+        text="Waze"
+        iconSize="1em"
+      />
+    </li>
+  </div>
+
+  <div class="main-menu-info">
+    <div class="social-links">
+      <a href={Info.insta} target="_blank" rel="noopener noreferrer">
+        <InstagramIcon />
+      </a>
+      <a href={Info.facebook} target="_blank" rel="noopener noreferrer">
+        <FacebookIcon />
+      </a>
+      <a href={`mailto:${Info.email}`} target="_blank" rel="noopener noreferrer">
+        <MailIcon />
+      </a>
+    </div>
+      <p class="bold center">DAYA HENDAYE <br />{Info.address}</p>
+      <p class="center">{Info.operatingHours}</p>
+    </div>
+  </div>
+
+  <style>
+    .main-menu {
+      position: absolute;
+      display: flex;
+      background-color: var(--primary-600);
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      top: 120%;
+      right: 0;
+      min-width: 350px;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      list-style: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition:
+        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    }
+
+    .main-menu-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 0.5rem;
+  
+      padding: 1.2rem 1.2rem;
+    }
+
+    .main-menu li {
+      margin-bottom: 0.5rem;
+      width: 100%;
+    }
+    .main-menu li:last-child {
+      margin-bottom: 0;
+    }
+
+    .main-menu[aria-hidden="false"] {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .main-menu li {
+      margin-bottom: 0.5rem;
+    }
+    .main-menu li:last-child {
+      margin-bottom: 0;
+    }
+
+    .main-menu a:hover,
+    .main-menu a:focus {
+      background: var(--primary-500);
+    }
+
+    .main-menu-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary-700);
+      padding: 1.2rem 1.2rem;
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+.social-links svg{
+    width:2rem;
+}
+
+  </style>
+</ul>
