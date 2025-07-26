@@ -22,12 +22,14 @@ const types: string[] = Object.keys(grouped);
 
 
 <div class="product-list-container pb3">
-  <FoodNav categories={types} />
-  <FilterVeg />
 
+ 
+ 
+    <FilterVeg/>
   {types.map((type: string) => (
-    <section id={`${type.toLowerCase().replace(/\s+/g, '-')}`} class="product-section pt2">
-      <h2 id="category-subtitle" class=" h5 category narrow center">{type}</h2>
+    <section id={`${type.toLowerCase().replace(/\s+/g, '-')}`}  
+    class="product-section pt2">
+      <h2 id="category-subtitle" class=" h5 category narrow center mt2">{type}</h2>
       <ul  class="products-list">
         {grouped[type].map((product: Product, idx: number) => (
           <li data-idx={idx} data-category={product.category ? product.category.toLowerCase() : ''}>
@@ -110,6 +112,7 @@ const types: string[] = Object.keys(grouped);
 
   #category-subtitle {
     font-weight: 600;
+    
     margin-left: auto;
     margin-right: auto;
     color: var(--primary-500);
@@ -156,7 +159,7 @@ border-radius: .5rem;
   </style>
 
 <script>
-  // Show .click-collect-btn after 1000px scroll with fade-in-up
+  // Show .click-collect-btn after 500px scroll with fade-in-up
   const btn = document.querySelector('.click-collect-btn');
   function toggleBtn() {
     if (!btn) return;
@@ -169,4 +172,41 @@ border-radius: .5rem;
   window.addEventListener('scroll', toggleBtn);
   // Initial check
   toggleBtn();
+
+  // Hide section if its .products-list has no visible li (after veg filter)
+  function hideEmptySections() {
+    document.querySelectorAll('.product-section').forEach(section => {
+      const sectionEl = section as HTMLElement;
+      const list = sectionEl.querySelector('.products-list') as HTMLElement | null;
+      if (!list) return;
+      // Only count <li> that are not display:none (works for grid/flex)
+      const hasVisible = Array.from(list.children).some(li => {
+        const el = li as HTMLElement;
+        return window.getComputedStyle(el).display !== 'none';
+      });
+      sectionEl.style.display = hasVisible ? '' : 'none';
+
+      // Hide/show FoodNav link matching this section
+      const sectionId = sectionEl.id;
+      if (sectionId) {
+        // Look for nav links with href="#sectionId"
+        const navLink = document.querySelector(`.food-nav a[href="#${sectionId}"]`);
+        if (navLink) {
+          (navLink as HTMLElement).style.display = hasVisible ? '' : 'none';
+        }
+      }
+    });
+  }
+  // Listen for veg-toggle or any custom event your filter triggers
+  window.addEventListener('veg-toggle', hideEmptySections);
+  // Listen for any filter change (in case FilterVeg uses other events)
+  window.addEventListener('filter-change', hideEmptySections);
+  // Also run after DOMContentLoaded in case filter is persisted
+  window.addEventListener('DOMContentLoaded', () => {
+    hideEmptySections();
+    // Observe DOM changes in all .products-list for dynamic filtering
+    document.querySelectorAll('.products-list').forEach(list => {
+      new MutationObserver(hideEmptySections).observe(list, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
+    });
+  });
 </script>

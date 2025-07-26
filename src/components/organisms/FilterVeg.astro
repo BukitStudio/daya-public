@@ -2,7 +2,7 @@
 import SwitchVeg from "../atoms/SwitchVeg.astro";
 ---
 
-<div class ="filter-switch-container ">
+<div class ="filter-switch-container mt2 ">
 
 <div class="filter-switch narrow">
   <p class="mb0">Mode végétarien <span id="veg-mode-status" ></span></p>
@@ -14,7 +14,10 @@ import SwitchVeg from "../atoms/SwitchVeg.astro";
   .filter-switch-container{
     background: var(--primary-600);
     padding: 1rem 2rem;
-
+    transition: transform .8s cubic-bezier(0.4,0,0.2,1);
+  }
+  .filter-switch-container.scroll-up {
+    transform: translateY(60px);
   }
   .filter-switch{
     display: flex;
@@ -23,14 +26,10 @@ import SwitchVeg from "../atoms/SwitchVeg.astro";
     -webkit-tap-highlight-color: transparent;
 }
 @media screen and (max-width: 768px) {
-  
     .filter-switch-container{
-    padding: 0.5rem 1rem;
-
-  }
-
+      padding: 0.5rem 1rem;
+    }
 }
-
 
 :global(.hidden-product) {
   display: none !important;
@@ -73,5 +72,23 @@ window.addEventListener('DOMContentLoaded', function() {
     updateFilter();
   }, 0);
 });
+
+// Add scroll-up transform logic (same as FoodNav)
+// window.addEventListener('DOMContentLoaded', function() {
+//   const filterBar = document.querySelector('.filter-switch-container');
+//   if (!filterBar) return;
+//   let lastScrollY = window.scrollY;
+//   window.addEventListener('scroll', () => {
+//     const currentScrollY = window.scrollY;
+//     if (currentScrollY === 0) {
+//       filterBar.classList.remove('scroll-up');
+//     } else if (currentScrollY < lastScrollY) {
+//       filterBar.classList.add('scroll-up');
+//     } else {
+//       filterBar.classList.remove('scroll-up');
+//     }
+//     lastScrollY = currentScrollY;
+//   });
+// });
 </script>
 

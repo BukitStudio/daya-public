@@ -69,7 +69,7 @@ import SocialLinks from "../molecules/SocialLinks.astro";
     <p class="bold center mb0">DAYA HENDAYE</p><p>{Info.address}</p>
     <p class="center neutral-500">{Info.operatingHours}</p>
   </div>
-</div>
+
 
 <style>
   .main-menu {
@@ -79,13 +79,16 @@ import SocialLinks from "../molecules/SocialLinks.astro";
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 0.5rem;
+    gap: 1rem;
     top: 120%;
-    right: 0;
+    right: 1rem;
     max-width: 350px;
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.64),
+      0 1.5px 8px 0 rgba(1,29,22,0.18),
+      0 0 0 9999px rgba(9, 15, 14, 0.554);
     list-style: none;
     opacity: 0;
     transform: translateY(-10px);
@@ -93,6 +96,7 @@ import SocialLinks from "../molecules/SocialLinks.astro";
       opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
       transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
+    z-index: 1000;
   }
 
   .main-menu-links {
@@ -101,9 +105,9 @@ import SocialLinks from "../molecules/SocialLinks.astro";
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 0.5rem;
+    gap: 1rem;
 
-    padding: 1.2rem 1.2rem;
+    padding: 2rem 1.2rem;
   }
 
   .link-group{
@@ -140,7 +144,7 @@ import SocialLinks from "../molecules/SocialLinks.astro";
       transform 0.2s;
   }
 
-  .main-menu-links a:focus-visible {
+  .main-menu-links a:focus {
     outline: 2px solid var(--secondary-500);
     outline-offset: 2px;
   }
@@ -166,4 +170,10 @@ import SocialLinks from "../molecules/SocialLinks.astro";
   .social-links svg {
     width: 2rem;
   }
+
+
+
 </style>
+
+
+</script>

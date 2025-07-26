@@ -2,7 +2,7 @@
 ---
 
 
-<button class="hamburger">
+<button id="hamburger" class="hamburger">
   <div>
   <span class="line"></span>
   <span class="line"></span>
@@ -44,6 +44,9 @@
         outline: 2px solid var(--secondary-500);
         outline-offset: 2px;
       }
+      .hamburger:focus:not(:focus-visible) {
+  outline: none;
+}
 .hamburger .line {
   display: block;
   border-radius: 999px;

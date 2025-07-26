@@ -12,9 +12,9 @@ import GmapIcon from "../../assets/icons/gmaps.svg";
     </a>
 
   <SocialLinks />
-      <p class="bold center mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer"><GmapIcon /> {Info.address}</a></p>
-      
-      <p class="center neutral-500" set:html={Info.operatingHours.replace(/\n/g, '<br>')}></p>
+      <p class="bold center mt2 mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer"><GmapIcon /> {Info.address}</a></p>
+
+      <p class="center neutral-500 mb0" set:html={Info.operatingHours.replace(/\n/g, '<br>')}></p>
     
 
 
@@ -35,27 +35,34 @@ import GmapIcon from "../../assets/icons/gmaps.svg";
 
 <style>
   .footer {
-
+   
     background-color: var(--primary-600);
     z-index: 999;
   
     
   }
-.footer-brand a[href*="google.com"] {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-}
+  .footer-brand a[href*="google.com"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    outline: none;
+  }
+
+  /* Hide focus outline on mouse click, but keep it for keyboard navigation */
+  .footer-brand a:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
   .footer-brand {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1rem;
     margin:auto;
 
     max-width: 40ch;
-    padding: 6rem 1rem;
+    padding: 3rem 1rem;
   }
 
 

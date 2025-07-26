@@ -2,20 +2,18 @@
 import FoodIcon from "../atoms/icons/FoodIcon.astro";
 
 const categories: string[] = Astro.props.categories ?? [];
-// Map display/type names to FoodIcon keys
+// Map display/type names to FoodIcon keys (all lowercase for robust matching)
 const iconMap: Record<string, string> = {
-  Nem: "nem",
-  Bobun: "bobun",
-  Sandwich: "sandwich",
-  "Sandwich Banh Mi": "sandwich",
-  Burger: "burger",
-  "Burger Banh Mi": "burger",
-  "Plat principal": "plat",
-  "Menu enfant": "kid",
-  "Menu Enfant": "kid",
-  Dessert: "dessert",
-  Accompagnement: "side",
-  Boisson: "boisson",
+  "nem": "nem",
+  "bobun": "bobun",
+  "sandwich banh mi": "sandwich",
+  "burger": "burger",
+  "burger banh mi": "burger",
+  "plat principal": "plat",
+  "menu enfant": "kid",
+  "dessert": "dessert",
+  "side": "side",
+  "boisson": "boisson",
 };
 ---
 
@@ -24,8 +22,9 @@ const iconMap: Record<string, string> = {
     <ul>
       {
         categories.map((cat: string) => {
+          const normalizedCat = cat.trim().toLowerCase();
           const iconSlug =
-            iconMap[cat] ?? cat.toLowerCase().replace(/\s+/g, "");
+            iconMap[normalizedCat] ?? normalizedCat.replace(/\s+/g, "");
           return (
             <li>
               <a
@@ -48,18 +47,31 @@ const iconMap: Record<string, string> = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     padding: 0rem;
     position: sticky;
     top: 0;
     z-index: 1000;
-
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     box-shadow:
       0 -2px 16px 0 rgba(0, 0, 0, 0.1),
       inset 0 1px 8px 0 rgba(255, 255, 255, 0.1);
+    transition: transform .8s cubic-bezier(0.4,0,0.2,1), opacity .4s;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .food-nav.food-nav--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-40px);
+  }
+
+
+  .food-nav.scroll-up {
+    transform: translateY(60px);
+
   }
 
   .food-tags ul {
@@ -113,6 +125,7 @@ const iconMap: Record<string, string> = {
     .food-nav {
       overflow: hidden;
       width: 100vw;
+      height: 70px;
       z-index: 1000;
       margin: 0;
       padding: .5rem 0 .5rem 0;
@@ -170,6 +183,15 @@ function scrollTracker() {
   const currentYScroll = window.scrollY;
   let activeLink = null;
   let activeId = null;
+  // Always remove 'active' from all links first
+  document.querySelectorAll('.food-link.active').forEach(link => link.classList.remove('active'));
+// Remove sticky :active/focus from food-link after tap/click (mobile)
+window.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.food-link').forEach(link => {
+    link.addEventListener('touchend', () => link.blur(), { passive: true });
+    link.addEventListener('click', () => link.blur(), { passive: true });
+  });
+});
   sections.forEach((section) => {
     const s = section;
     const sectionHeight = (s).offsetHeight;
@@ -183,8 +205,6 @@ function scrollTracker() {
       currentNavLink?.classList.add("active");
       activeLink = currentNavLink;
       activeId = id;
-    } else {
-      currentNavLink?.classList.remove("active");
     }
   });
   if (activeLink && activeId !== lastActiveId) {
@@ -201,5 +221,34 @@ window.addEventListener("scroll", function() {
   }
 });
 
+let lastScrollY = window.scrollY;
+const nav = document.querySelector('.food-nav');
 
+window.addEventListener('scroll', () => {
+  if (!nav) return;
+  const currentScrollY = window.scrollY;
+  if (currentScrollY < lastScrollY) {
+    nav.classList.add('scroll-up');
+  } else {
+    nav.classList.remove('scroll-up');
+  }
+  lastScrollY = currentScrollY;
+});
+
+
+
+// Hide FoodNav until scrollY > 500px
+window.addEventListener('DOMContentLoaded', function() {
+  const nav = document.querySelector('.food-nav');
+  function toggleNavVisibility() {
+    if (!nav) return;
+    if (window.scrollY > 650) {
+      nav.classList.remove('food-nav--hidden');
+    } else {
+      nav.classList.add('food-nav--hidden');
+    }
+  }
+  window.addEventListener('scroll', toggleNavVisibility);
+  toggleNavVisibility();
+});
 </script>

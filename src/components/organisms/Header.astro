@@ -2,25 +2,49 @@
 import Hamburger from "../atoms/Hamburger.astro";
 import MainMenu from "./MainMenu.astro";
 import Daya from "../../assets/icons/logo/daya.svg";
+import FoodNav from "./FoodNav.astro";
+import type { Product } from "../../data/productsSchema";
+import { fetchProductsSheet } from "../../data/fetchProductsSheet";
+
+const products: Product[] = await fetchProductsSheet();
+
+// Group products by type
+const grouped: Record<string, Product[]> = {};
+for (const product of products) {
+  const type: string = product.type?.split(",")[0]?.trim() || "Autres";
+  if (!grouped[type]) grouped[type] = [];
+  grouped[type].push(product);
+}
+const types: string[] = Object.keys(grouped);
 ---
 
 <header class="header">
   <nav class="nav" aria-label="Main navigation">
-    <Daya width={70} />
+        <a href="/" aria-label="Accueil">
+      <Daya width={70} />
+    </a>
     <Hamburger />
   </nav>
 
   <MainMenu />
-</header>
 
+</header>
+   <FoodNav categories={types} />
 <style>
+
   .header {
     width: 100%;
+    height: 60px;
     display: flex;
     padding: 1rem;
     z-index: 9999;
     position: sticky;
     top: 0rem;
+    background-color: transparent;
+    transition: background-color .8s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .header.header--scrolled {
     background-color: var(--primary-700);
   }
 
@@ -39,16 +63,19 @@ import Daya from "../../assets/icons/logo/daya.svg";
 
   .header.header--hidden {
     transform: translateY(-120%);
-    opacity: 0;
+  transition: transform 1s cubic-bezier(0.4,0,0.2,1);
+
     pointer-events: none;
+
   }
 </style>
 
 <script>
-  const logoBtn = document.querySelector(".header");
+  // Hamburger menu toggle functionality
+  const hamburgerBtn = document.querySelector("#hamburger");
   const menu = document.getElementById("main-menu");
   const nav = document.querySelector(".nav");
-  if (logoBtn && menu && nav) {
+  if (hamburgerBtn && menu && nav) {
     function setMenuTabbable(isOpen: boolean) {
       if (!menu) return;
       const links = menu.querySelectorAll("a, button, input, select, textarea");
@@ -56,10 +83,10 @@ import Daya from "../../assets/icons/logo/daya.svg";
         (link as HTMLElement).tabIndex = isOpen ? 0 : -1;
       });
     }
-    logoBtn.addEventListener("click", (e) => {
+    hamburgerBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const expanded = logoBtn.getAttribute("aria-expanded") === "true";
-      logoBtn.setAttribute("aria-expanded", String(!expanded));
+      const expanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
+      hamburgerBtn.setAttribute("aria-expanded", String(!expanded));
       menu.setAttribute("aria-hidden", String(expanded));
       menu.hidden = expanded;
       setMenuTabbable(!expanded);
@@ -80,15 +107,24 @@ import Daya from "../../assets/icons/logo/daya.svg";
   }
 
   // Hide header on scroll down, show on scroll up
+
+  const headerHide = document.querySelector("header");
   let lastScrollY = window.scrollY;
   let ticking = false;
   function onScroll() {
-    if (!logoBtn) return;
+    if (!headerHide) return;
     const currentScrollY = window.scrollY;
-    if (currentScrollY > lastScrollY && currentScrollY > 40) {
-      logoBtn.classList.add("header--hidden");
+    // Add bg only after scrolling 500px
+    if (currentScrollY > 800) {
+      headerHide.classList.add("header--scrolled");
     } else {
-      logoBtn.classList.remove("header--hidden");
+      headerHide.classList.remove("header--scrolled");
+    }
+    // Hide on scroll down, show on scroll up
+    if (currentScrollY > lastScrollY && currentScrollY > 40) {
+      headerHide.classList.add("header--hidden");
+    } else {
+      headerHide.classList.remove("header--hidden");
     }
     lastScrollY = currentScrollY;
     ticking = false;
@@ -99,4 +135,33 @@ import Daya from "../../assets/icons/logo/daya.svg";
       ticking = true;
     }
   });
+
+  // Set initial state on load
+  if (headerHide) {
+    if (window.scrollY > 500) {
+      headerHide.classList.add("header--scrolled");
+    } else {
+      headerHide.classList.remove("header--scrolled");
+    }
+  }
+
+  // Handle focus out to close menu
+    if (menu && logoBtn) {
+  menu.addEventListener("focusout", (e) => {
+    // @ts-ignore
+    const next = e.relatedTarget;
+    if (
+      next &&
+      !menu.contains(next) &&
+      !logoBtn.contains(next)
+    ) {
+      logoBtn.setAttribute("aria-expanded", "false");
+      menu.setAttribute("aria-hidden", "true");
+      menu.hidden = true;
+      setMenuTabbable(false);
+    }
+  });
+}
+
+
 </script>
