@@ -80,7 +80,7 @@ const iconMap: Record<string, string> = {
     flex-direction: row;
     justify-content: center;
     border-radius: .5rem;
-    padding: 0.6rem 1.3rem;
+    padding: 0.5rem 1.3rem;
 
     text-decoration: none;
     white-space: nowrap;
@@ -105,8 +105,8 @@ const iconMap: Record<string, string> = {
   }
 
   .food-link svg {
-    min-width: 2rem;
-    min-height: 2rem;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
   }
 
   @media screen and (max-width: 768px) {
@@ -115,7 +115,7 @@ const iconMap: Record<string, string> = {
       width: 100vw;
       z-index: 1000;
       margin: 0;
-      padding: 1.5rem 0 1.5rem 0;
+      padding: .5rem 0 .5rem 0;
     }
 
     .food-tags.narrow {
@@ -143,82 +143,63 @@ const iconMap: Record<string, string> = {
 </style>
 
 <script>
-  if (typeof window !== "undefined") {
-  
-    // Use native scrollIntoView for smooth scrolling to section
-    document.addEventListener("DOMContentLoaded", function () {
-      const links = Array.from(
-        document.querySelectorAll(".food-link")
-      ) as HTMLAnchorElement[];
-      // Select sections with id matching nav hashes
-      const sections = Array.from(
-        document.querySelectorAll("section[id]")
-      ).filter((s) =>
-        links.some((l) => l.hash === `#${s.id}`)
-      ) as HTMLElement[];
-      console.log(
-        "FoodNav debug: found links",
-        links.map((l) => l.hash)
-      );
-      console.log(
-        "FoodNav debug: found sections",
-        sections.map((s) => s.id)
-      );
-      function setActive(link: HTMLAnchorElement | null) {
-        links.forEach((l) => l.classList.remove("active"));
-        if (link) {
-          link.classList.add("active");
-          // Center active link in scroll container on mobile
-          const ul = link.closest("ul");
-          if (ul && window.innerWidth <= 768) {
-            // Calculate scroll position to center the link
-            const ulRect = ul.getBoundingClientRect();
-            const linkRect = link.getBoundingClientRect();
-            const scrollLeft = ul.scrollLeft + (linkRect.left + linkRect.width / 2) - (ulRect.left + ulRect.width / 2);
-            ul.scrollTo({ left: scrollLeft, behavior: "smooth" });
-          }
-        }
-      }
-      const observer = new window.IntersectionObserver(
-        (entries) => {
-          // Find the visible section closest to the top (smallest positive top)
-          let closest: HTMLElement | null = null;
-          let minTop = Infinity;
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const target = entry.target as HTMLElement;
-              const top = target.getBoundingClientRect().top;
-              if (top < minTop) {
-                minTop = top;
-                closest = target;
-              }
-            }
-          });
-          if (closest) {
-            const id = closest.id;
-            const activeLink = links.find((link) => link.hash === `#${id}`);
-            setActive(activeLink ?? null);
-          }
-        },
-        {
-          rootMargin: "-150px 0px 0px 0px",
-          threshold: 0.1,
-        }
-      );
-      sections.forEach((section) => observer.observe(section));
-      // Set active on click for instant feedback, then let IntersectionObserver take over
-      links.forEach((link) => {
-        link.addEventListener("click", (e) => {
-          // Prevent default jump to allow smooth scroll
-          e.preventDefault();
-          setActive(link);
-          const sectionId = link.getAttribute('href')?.replace('#', '');
-          const el = document.getElementById(sectionId);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      });
-    });
+
+// Efficient scroll spy using requestAnimationFrame
+let ticking = false;
+
+
+const sections = Array.from(document.querySelectorAll("section[id]"));
+let lastActiveId = null;
+
+function centerActiveLink(link) {
+  const ul = link.closest("ul");
+  if (ul && window.innerWidth <= 768) {
+    const ulRect = ul.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const scrollLeft = ul.scrollLeft + (linkRect.left + linkRect.width / 2) - (ulRect.left + ulRect.width / 2);
+    ul.scrollTo({ left: scrollLeft });
+    if (typeof ul.scrollTo !== 'function') {
+      link.scrollIntoView({ inline: 'center', block: 'nearest' });
+    }
   }
+}
+
+
+
+function scrollTracker() {
+  const currentYScroll = window.scrollY;
+  let activeLink = null;
+  let activeId = null;
+  sections.forEach((section) => {
+    const s = section;
+    const sectionHeight = (s).offsetHeight;
+    const sectionTop = (s).offsetTop - 300; // adjust for sticky nav
+    const id = s.getAttribute("id");
+    const currentNavLink = document.querySelector(`.food-link[href="#${id}"]`);
+    if (
+      currentYScroll > sectionTop &&
+      currentYScroll <= sectionTop + sectionHeight
+    ) {
+      currentNavLink?.classList.add("active");
+      activeLink = currentNavLink;
+      activeId = id;
+    } else {
+      currentNavLink?.classList.remove("active");
+    }
+  });
+  if (activeLink && activeId !== lastActiveId) {
+    centerActiveLink(activeLink);
+    lastActiveId = activeId;
+  }
+  ticking = false;
+}
+
+window.addEventListener("scroll", function() {
+  if (!ticking) {
+    window.requestAnimationFrame(scrollTracker);
+    ticking = true;
+  }
+});
+
+
 </script>

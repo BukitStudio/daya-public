@@ -68,105 +68,109 @@ import MailIcon from "../../assets/icons/social/mail.svg";
       <a href={Info.facebook} target="_blank" rel="noopener noreferrer">
         <FacebookIcon />
       </a>
-      <a href={`mailto:${Info.email}`} target="_blank" rel="noopener noreferrer">
+      <a
+        href={`mailto:${Info.email}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <MailIcon />
       </a>
     </div>
-      <p class="bold center mb0">DAYA HENDAYE </p><p>{Info.address}</p>
-      <p class="center neutral-500">{Info.operatingHours}</p>
-    </div> 
+    <p class="bold center mb0">DAYA HENDAYE</p><p>{Info.address}</p>
+    <p class="center neutral-500">{Info.operatingHours}</p>
   </div>
+</ul>
 
-  <style>
-    .main-menu {
-      position: absolute;
-      display: flex;
-      background-color: var(--primary-600);
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 0.5rem;
-      top: 120%;
-      right: 0;
-      min-width: 350px;
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      list-style: none;
-      opacity: 0;
-      transform: translateY(-10px);
-      pointer-events: none;
-      transition:
-        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+<style>
+  .main-menu {
+    position: absolute;
+    display: flex;
+    background-color: var(--neutral-300);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    top: 120%;
+    right: 0;
+    min-width: 350px;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    list-style: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition:
+      opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-    }
+  .main-menu-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
 
-    .main-menu-links {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      gap: 0.5rem;
-  
-      padding: 1.2rem 1.2rem;
-    }
+    padding: 1.2rem 1.2rem;
+  }
 
-    .main-menu li {
-      margin-bottom: 0.5rem;
-      width: 100%;
-    }
-    .main-menu li:last-child {
-      margin-bottom: 0;
-    }
+  .main-menu li {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  .main-menu li:last-child {
+    margin-bottom: 0;
+  }
 
-    .main-menu[aria-hidden="false"] {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
+  .main-menu[aria-hidden="false"] {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 
-    .main-menu li {
-      margin-bottom: 0.5rem;
-    }
-    .main-menu li:last-child {
-      margin-bottom: 0;
-    }
+  .main-menu li {
+    margin-bottom: 0.5rem;
+  }
+  .main-menu li:last-child {
+    margin-bottom: 0;
+  }
 
-.main-menu a:hover {
-  box-shadow: 0 4px 24px 0 rgba(6, 43, 33, 0.471), 0 1.5px 8px 0 rgba(1, 29, 22, 0.725);
-  transform: translateY(-2px) scale(1.01);
-  transition: box-shadow 0.2s, transform 0.2s;
-}
+  .main-menu a:hover {
+    box-shadow:
+      0 4px 24px 0 rgba(6, 43, 33, 0.471),
+      0 1.5px 8px 0 rgba(1, 29, 22, 0.725);
+    transform: translateY(-2px) scale(1.01);
+    transition:
+      box-shadow 0.2s,
+      transform 0.2s;
+  }
 
-.main-menu-links a:focus-visible {
+  .main-menu-links a:focus-visible {
     outline: 2px solid var(--secondary-500);
     outline-offset: 2px;
   }
 
+  .main-menu-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-700);
+    padding: 1.2rem 1.2rem;
+  }
 
-    .main-menu-info {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: var(--primary-700);
-      padding: 1.2rem 1.2rem;
-    }
+  .social-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
 
-    .social-links {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-.social-links svg{
-    width:2rem;
-}
-
-  </style>
-</ul>
+  .social-links svg {
+    width: 2rem;
+  }
+</style>

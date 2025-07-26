@@ -21,6 +21,7 @@ const catIcon = {
   plat: PlatIcon,
   sandwich: SandwichIcon,
   side: SideIcon
+  
 };
 
 type IconName = keyof typeof catIcon;
@@ -34,7 +35,7 @@ const SvgIcon = catIcon[icon];
   <SvgIcon
     role="img"
     fill="currentColor"
-    width="1rem"
+    width=".8rem"
     aria-label={icon.charAt(0).toUpperCase() + icon.slice(1) + ' icon'}
     {...rest}
   >

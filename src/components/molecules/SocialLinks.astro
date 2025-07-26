@@ -1,0 +1,53 @@
+---
+import InstagramIcon from "../../assets/icons/social/insta.svg";
+import FacebookIcon from "../../assets/icons/social/facebook.svg";
+import MailIcon from "../../assets/icons/social/email.svg";
+import WhatsAppIcon from "../../assets/icons/social/whatsapp.svg";
+import Info from '../../data/info.json';
+
+const { class: className = "social-links" } = Astro.props;
+---
+
+
+<div class={className}>
+  <a href={Info.insta} target="_blank" rel="noopener noreferrer">
+    <WhatsAppIcon />
+  </a>
+  <a href={Info.insta} target="_blank" rel="noopener noreferrer">
+    <InstagramIcon />
+  </a>
+  <a href={Info.facebook} target="_blank" rel="noopener noreferrer">
+    <FacebookIcon />
+  </a>
+  <a href={`mailto:${Info.email}`} target="_blank" rel="noopener noreferrer">
+    <MailIcon />
+  </a>
+</div>
+
+
+    <style>
+    .social-links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+.social-links svg{
+    width:2rem;
+}
+
+
+
+svg{
+  filter: none;
+      transition: filter 2s;
+
+}
+   svg:hover {
+    filter: drop-shadow(0 0 2px var(--primary-500)) drop-shadow(0 0 8px var(--secondary-500));
+    transition: filter 0.3s;
+  }
+
+</style>

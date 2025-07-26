@@ -1,9 +1,8 @@
 ---
 import LogoDayaType from "../atoms/LogoDayaType.astro";
 import Info from "../../data/info.json";
-import InstagramIcon from "../../assets/icons/social/insta.svg";
-import FacebookIcon from "../../assets/icons/social/facebook.svg";
-import MailIcon from "../../assets/icons/social/mail.svg";
+import SocialLinks from "../molecules/SocialLinks.astro";
+import GmapIcon from "../../assets/icons/gmaps.svg";
 ---
 
 <footer class="footer">
@@ -12,20 +11,9 @@ import MailIcon from "../../assets/icons/social/mail.svg";
       <LogoDayaType width=250 />
     </a>
 
-    <div class="social-links">
-      <a href={Info.insta} target="_blank" rel="noopener noreferrer">
-        <InstagramIcon />
-      </a>
-      <a href={Info.facebook} target="_blank" rel="noopener noreferrer">
-        <FacebookIcon />
-      </a>
-      <a href={`mailto:${Info.email}`} target="_blank" rel="noopener noreferrer">
-        <MailIcon />
-      </a>
-    </div>
-      <p class="bold center mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer">{Info.address}</a></p>
-      <p class="center neutral-500">{Info.operatingHours}</p>
-    </div> 
+  <SocialLinks />
+      <p class="bold center mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer"><GmapIcon /> {Info.address}</a></p>
+      <p class="center neutral-500" set:html={Info.operatingHours.replace(/\n/g, '<br>')}></p>
     
 
 
@@ -35,11 +23,10 @@ import MailIcon from "../../assets/icons/social/mail.svg";
  
 
     <p class="neutral-500 txt-s">Site éco conçu par <a href="https://soberstudio.dev/" target="_blank" rel="noopener noreferrer">Sober Studio</a></p>
-     
-    <p class="neutral-500">This page loaded in <strong><span id="load-time"></span> seconds</strong> and emitted just <strong> 0.095g of CO2</strong></p>
 
-    
-    <p class=" neutral-500 txt-s mb0">&copy; {new Date().getFullYear()} Daya Hendaye - Tous droits réservés.</p> 
+    <p class="neutral-500">Cette page a chargé en <strong><span id="load-time"></span> secondes</strong> et a émis seulement<strong> 0.095g de CO2</strong></p>
+
+    <p class=" neutral-500 txt-s mb0">&copy; {new Date().getFullYear()} Daya Hendaye - Tous droits réservés.</p>
 
 
   </div>
@@ -47,13 +34,17 @@ import MailIcon from "../../assets/icons/social/mail.svg";
 
 <style>
   .footer {
-    width: 100%;
+
     background-color: var(--primary-600);
     z-index: 999;
   
     
   }
-
+.footer-brand a[href*="google.com"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
   .footer-brand {
     display: flex;
     flex-direction: column;
@@ -66,17 +57,7 @@ import MailIcon from "../../assets/icons/social/mail.svg";
     padding: 6rem 1rem;
   }
 
-    .social-links {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-    }
 
-.social-links svg{
-    width:2rem;
-}
   .footer-credits {
   padding: 1rem 2rem;
   background-color: var(--primary-500);
@@ -84,21 +65,6 @@ import MailIcon from "../../assets/icons/social/mail.svg";
 
 
 
-/* .logo-daya-type{
-  filter: none;
-  transition: filter 0.3s;
-}
-
-.logo-daya-type:hover {
-  filter: drop-shadow(0 0 2px var(--primary-500)) drop-shadow(0 0 8px var(--secondary-500)) brightness(1.15);
-} */
-
-   /* svg:hover {
-    filter: drop-shadow(0 0 2px var(--primary-500)) drop-shadow(0 0 8px var(--secondary-500));
-    transition: filter 0.3s;
-      filter: brightness(1.15) drop-shadow(0 0 8px var(--primary-500));
-
-  } */
 
 </style>
 
