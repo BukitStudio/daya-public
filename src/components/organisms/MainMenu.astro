@@ -176,4 +176,31 @@ import SocialLinks from "../molecules/SocialLinks.astro";
 </style>
 
 
+<script>
+// Close menu when clicking or focusing outside
+window.addEventListener('DOMContentLoaded', function() {
+  const menu = document.getElementById('main-menu');
+  function closeMenu() {
+    if (!menu) return;
+    menu.setAttribute('aria-hidden', 'true');
+    menu.setAttribute('hidden', '');
+  }
+  function handlePointerDown(e) {
+    if (!menu) return;
+    if (menu.getAttribute('aria-hidden') === 'true') return;
+    if (!menu.contains(e.target)) {
+      closeMenu();
+    }
+  }
+  function handleFocusIn(e) {
+    if (!menu) return;
+    if (menu.getAttribute('aria-hidden') === 'true') return;
+    if (!menu.contains(e.target)) {
+      closeMenu();
+    }
+  }
+  document.addEventListener('mousedown', handlePointerDown);
+  document.addEventListener('touchstart', handlePointerDown);
+  document.addEventListener('focusin', handleFocusIn);
+});
 </script>
