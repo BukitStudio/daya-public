@@ -24,9 +24,7 @@ const types: string[] = Object.keys(grouped);
 <div class="product-list-container pb3">
   <FoodNav categories={types} />
   <FilterVeg />
-<ul>
-  {products.map((p) => <li>{p.name}</li>)}
-</ul>
+
   {types.map((type: string) => (
     <section id={`${type.toLowerCase().replace(/\s+/g, '-')}`} class="product-section pt2">
       <h2 id="category-subtitle" class=" h5 category narrow center">{type}</h2>

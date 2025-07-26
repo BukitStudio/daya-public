@@ -2,16 +2,48 @@
 ---
 
 
-<div class="hamburger">
+<button class="hamburger">
+  <div>
   <span class="line"></span>
   <span class="line"></span>
   <span class="line"></span>
 </div>
+</button>
 
 
 <style>
 
 
+      .hamburger {
+        background: none;
+        border: none;
+        cursor: pointer !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+  
+        /* outline: none;
+            transition:
+          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 -2px 16px 0 rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border-top: 1.5px solid rgba(255, 255, 255, 0.35);
+        transition:
+          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow:
+          0 -2px 16px 0 rgba(0, 0, 0, 0.1),
+          inset 0 1px 8px 0 rgba(255, 255, 255, 0.1); */
+      }
+
+      .hamburger:focus-visible {
+        outline: 2px solid var(--secondary-500);
+        outline-offset: 2px;
+      }
 .hamburger .line {
   display: block;
   border-radius: 999px;

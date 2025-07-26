@@ -1,135 +1,102 @@
 ---
 import Hamburger from "../atoms/Hamburger.astro";
 import MainMenu from "./MainMenu.astro";
+import Daya from "../../assets/icons/logo/daya.svg";
 ---
 
 <header class="header">
   <nav class="nav" aria-label="Main navigation">
-    <button
-      class="hamburger"
-      aria-label="Toggle menu"
-      aria-controls="main-menu"
-      aria-expanded="false"
-      type="button"
-    >
-      <Hamburger />
-    </button>
+    <Daya width={70} />
+    <Hamburger />
+  </nav>
 
-    <MainMenu />
+  <MainMenu />
+</header>
 
-    <style>
-      .header {
-        cursor: pointer;
-        height: auto;
-        width: fit-content;
-        display: flex;
-        padding: 1rem 1rem;
-        border-radius: 1rem;
-        z-index: 9999;
-        position: sticky;
-        top: 4rem;
-        right: 1rem;
-        margin-left: auto;
-        transition:
-          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-          opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 -2px 16px 0 rgba(0, 0, 0, 0.1);
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(16px) saturate(180%);
-        -webkit-backdrop-filter: blur(16px) saturate(180%);
-        border-top: 1.5px solid rgba(255, 255, 255, 0.35);
-        transition:
-          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-          opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow:
-          0 -2px 16px 0 rgba(0, 0, 0, 0.1),
-          inset 0 1px 8px 0 rgba(255, 255, 255, 0.1);
-      }
-      .header.header--hidden {
-        transform: translateY(-120%);
-        opacity: 0;
-        pointer-events: none;
-      }
+<style>
+  .header {
+    width: 100%;
+    display: flex;
+    padding: 1rem;
+    z-index: 9999;
+    position: sticky;
+    top: 0rem;
+    background-color: var(--primary-700);
+  }
 
-      .nav {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-      }
+  .header svg {
+   min-width: 1.5rem;
+    min-height: 1.5rem;
+  }
+  nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
+  }
 
-      .hamburger {
-        background: none;
-        border: none;
-        cursor: pointer;
-        display: block;
-        padding: 0;
-        outline: none;
-      }
+  .header.header--hidden {
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
 
-      .hamburger:focus-visible {
-        outline: 2px solid var(--secondary-500);
-        outline-offset: 2px;
-      }
-    </style>
-    <script>
-      const logoBtn = document.querySelector(".header");
-      const menu = document.getElementById("main-menu");
-      const nav = document.querySelector(".nav");
-      if (logoBtn && menu && nav) {
-        function setMenuTabbable(isOpen: boolean) {
-          if (!menu) return;
-          const links = menu.querySelectorAll(
-            "a, button, input, select, textarea"
-          );
-          links.forEach((link) => {
-            (link as HTMLElement).tabIndex = isOpen ? 0 : -1;
-          });
-        }
-        logoBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const expanded = logoBtn.getAttribute("aria-expanded") === "true";
-          logoBtn.setAttribute("aria-expanded", String(!expanded));
-          menu.setAttribute("aria-hidden", String(expanded));
-          menu.hidden = expanded;
-          setMenuTabbable(!expanded);
-        });
-        // Ensure menu is hidden initially
+<script>
+  const logoBtn = document.querySelector(".header");
+  const menu = document.getElementById("main-menu");
+  const nav = document.querySelector(".nav");
+  if (logoBtn && menu && nav) {
+    function setMenuTabbable(isOpen: boolean) {
+      if (!menu) return;
+      const links = menu.querySelectorAll("a, button, input, select, textarea");
+      links.forEach((link) => {
+        (link as HTMLElement).tabIndex = isOpen ? 0 : -1;
+      });
+    }
+    logoBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const expanded = logoBtn.getAttribute("aria-expanded") === "true";
+      logoBtn.setAttribute("aria-expanded", String(!expanded));
+      menu.setAttribute("aria-hidden", String(expanded));
+      menu.hidden = expanded;
+      setMenuTabbable(!expanded);
+    });
+    // Ensure menu is hidden initially
+    menu.setAttribute("aria-hidden", "true");
+    menu.hidden = true;
+    setMenuTabbable(false);
+
+    document.addEventListener("click", (e) => {
+      if (!nav.contains(e.target as Node)) {
+        logoBtn.setAttribute("aria-expanded", "false");
         menu.setAttribute("aria-hidden", "true");
         menu.hidden = true;
         setMenuTabbable(false);
-
-        document.addEventListener("click", (e) => {
-          if (!nav.contains(e.target as Node)) {
-            logoBtn.setAttribute("aria-expanded", "false");
-            menu.setAttribute("aria-hidden", "true");
-            menu.hidden = true;
-            setMenuTabbable(false);
-          }
-        });
       }
+    });
+  }
 
-      // Hide header on scroll down, show on scroll up
-      let lastScrollY = window.scrollY;
-      let ticking = false;
-      function onScroll() {
-        if (!logoBtn) return;
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > lastScrollY && currentScrollY > 40) {
-          logoBtn.classList.add("header--hidden");
-        } else {
-          logoBtn.classList.remove("header--hidden");
-        }
-        lastScrollY = currentScrollY;
-        ticking = false;
-      }
-      window.addEventListener("scroll", () => {
-        if (!ticking) {
-          window.requestAnimationFrame(onScroll);
-          ticking = true;
-        }
-      });
-    </script>
-  </nav>
-</header>
+  // Hide header on scroll down, show on scroll up
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  function onScroll() {
+    if (!logoBtn) return;
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > lastScrollY && currentScrollY > 40) {
+      logoBtn.classList.add("header--hidden");
+    } else {
+      logoBtn.classList.remove("header--hidden");
+    }
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  });
+</script>

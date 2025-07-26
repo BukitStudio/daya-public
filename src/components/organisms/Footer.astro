@@ -13,6 +13,7 @@ import GmapIcon from "../../assets/icons/gmaps.svg";
 
   <SocialLinks />
       <p class="bold center mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer"><GmapIcon /> {Info.address}</a></p>
+      
       <p class="center neutral-500" set:html={Info.operatingHours.replace(/\n/g, '<br>')}></p>
     
 
