@@ -19,7 +19,7 @@ for (const product of products) {
 const types: string[] = Object.keys(grouped);
 ---
 
-<section class="FoodProducts">
+<section class="Food-Products">
   <FoodNav categories={types} />
   <div class="product-list-container pb3">
     <FilterVeg/>
@@ -146,9 +146,10 @@ border-radius: .5rem;
   }
 
 
-  .FoodProducts {
+  .Food-Products {
     position: relative;
     z-index: 1;
+    margin-top:-5rem;
     padding-bottom: 60px;
   }
   .FoodProducts .food-nav {
