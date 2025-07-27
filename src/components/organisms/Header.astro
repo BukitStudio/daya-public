@@ -113,22 +113,15 @@ const types: string[] = Object.keys(grouped);
   const headerHide = document.querySelector("header");
   let lastScrollY = window.scrollY;
   let ticking = false;
+
   function onScroll() {
     if (!headerHide) return;
     const currentScrollY = window.scrollY;
-    // Add bg only after scrolling 500px
     if (currentScrollY > 460) {
       headerHide.classList.add("header--scrolled");
     } else {
       headerHide.classList.remove("header--scrolled");
     }
-    // Hide on scroll down, show on scroll up
-    if (currentScrollY > lastScrollY && currentScrollY > 40) {
-      headerHide.classList.add("header--hidden");
-    } else {
-      headerHide.classList.remove("header--hidden");
-    }
-    lastScrollY = currentScrollY;
     ticking = false;
   }
   window.addEventListener("scroll", () => {
@@ -140,7 +133,7 @@ const types: string[] = Object.keys(grouped);
 
   // Set initial state on load
   if (headerHide) {
-    if (window.scrollY > 500) {
+    if (window.scrollY > 460) {
       headerHide.classList.add("header--scrolled");
     } else {
       headerHide.classList.remove("header--scrolled");

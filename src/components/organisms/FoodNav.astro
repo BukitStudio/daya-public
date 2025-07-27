@@ -49,7 +49,7 @@ const iconMap: Record<string, string> = {
     justify-content: center;
     padding: 0rem;
     position: sticky;
-    top: 0;
+    top: 60px;
     z-index: 1000;
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(16px) saturate(180%);
@@ -225,19 +225,19 @@ window.addEventListener("scroll", function() {
   }
 });
 
-let lastScrollY = window.scrollY;
-const nav = document.querySelector('.food-nav');
+// let lastScrollY = window.scrollY;
+// const nav = document.querySelector('.food-nav');
 
-window.addEventListener('scroll', () => {
-  if (!nav) return;
-  const currentScrollY = window.scrollY;
-  if (currentScrollY < lastScrollY) {
-    nav.classList.add('scroll-up');
-  } else {
-    nav.classList.remove('scroll-up');
-  }
-  lastScrollY = currentScrollY;
-});
+// window.addEventListener('scroll', () => {
+//   if (!nav) return;
+//   const currentScrollY = window.scrollY;
+//   if (currentScrollY < lastScrollY) {
+//     nav.classList.add('scroll-up');
+//   } else {
+//     nav.classList.remove('scroll-up');
+//   }
+//   lastScrollY = currentScrollY;
+// });
 
 
 
