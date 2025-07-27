@@ -19,13 +19,13 @@ const types: string[] = Object.keys(grouped);
 ---
 
 <header class="header">
-  <nav class="nav" aria-label="Main navigation">
-        
-  <div class="logo-container">
-    <a href="/" aria-label="Accueil"><LogoDayaSolo  width="70" height="60"/> </a>
+  <div class="nav" aria-label="Main navigation">
+        <a href="/" aria-label="Accueil"><LogoDayaSolo  width="70" height="60"/> </a>
   </div>
+  <div>
   <Hamburger />
-  </nav>
+  </div>
+</div>
 
   <MainMenu />
 
@@ -33,27 +33,34 @@ const types: string[] = Object.keys(grouped);
 
 <style>
 
-  .header {
-    width: 100%;
-    min-height: 60px;
+.header {
+  width: 100%;
+  min-height: 60px;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  transition: background-color .1s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
+  backface-visibility: hidden;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 1rem;
-    z-index: 11000;
-    position: sticky;
-    box-sizing: border-box;
-    top: 0rem;
-    background-color: transparent;
-    transition: background-color .1s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
+}
+.header svg {
+  height: 90px; 
+  width: auto;
+  min-width: 40px;
+  min-height: 40px;
+  display: block;
+}
 
-  }
-/* .logo-container{
-  font-display: block;
-  min-height: fit-content;
-    justify-content: center;
-} */
 
 
   .header.header--scrolled {
@@ -72,13 +79,7 @@ const types: string[] = Object.keys(grouped);
     margin-left: auto;
   }
 
-  .header.header--hidden {
-    transform: translateY(-120%);
-  transition: transform 1s cubic-bezier(0.4,0,0.2,1);
 
-    pointer-events: none;
-
-  }
 </style>
 
 <script>
