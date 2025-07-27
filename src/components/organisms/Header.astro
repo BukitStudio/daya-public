@@ -41,13 +41,14 @@ const types: string[] = Object.keys(grouped);
     position: sticky;
     top: 0rem;
     background-color: transparent;
-    transition: background-color .8s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
+    transition: background-color .1s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
 
   }
 
   .header.header--scrolled {
     background-color: var(--primary-700);
-   
+       transition: background-color .4s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
+
   }
 
   .header svg {
@@ -117,7 +118,7 @@ const types: string[] = Object.keys(grouped);
   function onScroll() {
     if (!headerHide) return;
     const currentScrollY = window.scrollY;
-    if (currentScrollY > 460) {
+    if (currentScrollY > 410) {
       headerHide.classList.add("header--scrolled");
     } else {
       headerHide.classList.remove("header--scrolled");
