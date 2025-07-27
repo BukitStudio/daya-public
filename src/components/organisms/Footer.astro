@@ -13,14 +13,16 @@ import LogoDayaHead from "../../../public/LogoDaya-head.svg";
     <a href="/" aria-label="Accueil">
       <LogoDayaType width=250 />
     </a>
-    <p class="neutral-500 txt-s mb0 center">De la cuisine maison avec des produits frais et de qualité. Nous proposons également des plats végétariens. Venez découvrir notre restaurant situé à deux pas de la plage d’hendaye au pays basque : )</p>
+    <p class="neutral-500 bold mb0 center">De la cuisine maison avec des produits frais et de qualité. Nous proposons également des plats végétariens. Venez découvrir notre restaurant situé à deux pas de la plage d’hendaye au pays basque : )</p>
 
    <SocialLinks />
+
+   <div class="footer-brand-info">
       <p class="bold center mt0 mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer"><GmapIcon /> {Info.address}</a></p>
 
-         
-      <p class="center neutral-500 mb0" set:html={Info.operatingHours.replace(/\n/g, '<br>')}></p>
 
+      <p class="center neutral-500 mt0 mb0" set:html={Info.operatingHours.replace(/\n/g, '<br>')}></p>
+   </div>
 </div>
 
 </div>
@@ -75,7 +77,8 @@ import LogoDayaHead from "../../../public/LogoDaya-head.svg";
     margin: auto;
     overflow: hidden;
     max-width: 40ch;
-    padding: 6rem 1rem;
+    min-height: 80vh;
+    padding: 4rem 1rem;
     z-index: 1;
   }
 
@@ -97,7 +100,7 @@ import LogoDayaHead from "../../../public/LogoDaya-head.svg";
 
   .footer-credits {
   padding: 1rem 2rem;
-  background-color: var(--primary-500);
+  background-color: #091F20;
 }
 
 .footer-logo-head{
