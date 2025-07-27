@@ -112,7 +112,6 @@ const types: string[] = Object.keys(grouped);
 
     document.addEventListener("click", (e) => {
       if (!nav.contains(e.target as Node)) {
-        logoBtn.setAttribute("aria-expanded", "false");
         menu.setAttribute("aria-hidden", "true");
         menu.hidden = true;
         setMenuTabbable(false);
