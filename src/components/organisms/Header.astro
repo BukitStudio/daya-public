@@ -37,15 +37,17 @@ const types: string[] = Object.keys(grouped);
     height: 60px;
     display: flex;
     padding: 1rem;
-    z-index: 9999;
+    z-index: 11000;
     position: sticky;
     top: 0rem;
     background-color: transparent;
     transition: background-color .8s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
+
   }
 
   .header.header--scrolled {
     background-color: var(--primary-700);
+   
   }
 
   .header svg {
@@ -115,7 +117,7 @@ const types: string[] = Object.keys(grouped);
     if (!headerHide) return;
     const currentScrollY = window.scrollY;
     // Add bg only after scrolling 500px
-    if (currentScrollY > 800) {
+    if (currentScrollY > 460) {
       headerHide.classList.add("header--scrolled");
     } else {
       headerHide.classList.remove("header--scrolled");

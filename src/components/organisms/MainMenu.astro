@@ -35,7 +35,7 @@ import SocialLinks from "../molecules/SocialLinks.astro";
         />
       </li>
     </ul>
-    <p class="uppercase">Nous trouver</p>
+    <p class="uppercase mt1">Nous trouver</p>
     <ul class="link-group">
       <li>
         <BtnLink
@@ -62,14 +62,34 @@ import SocialLinks from "../molecules/SocialLinks.astro";
     </ul>
   </div>
 
+  <div class="main-menu-info-container">
   <div class="main-menu-info">
-    <div class="social-links">
+    <p class="p-l bold center mb0">DAYA HENDAYE</p><p>{Info.address}</p>
+      
+    <p class="center neutral-500 mb0" set:html={Info.operatingHours.replace(/\n/g, '<br>')}></p>
+
+    </div>
+    <div class="social-links-container">
       <SocialLinks />
     </div>
-    <p class="bold center mb0">DAYA HENDAYE</p><p>{Info.address}</p>
-    <p class="center neutral-500">{Info.operatingHours}</p>
+<script>
+// Prevent body scroll when main menu is open
+window.addEventListener('DOMContentLoaded', function() {
+  const menu = document.getElementById('main-menu');
+  const observer = new MutationObserver(() => {
+    if (!menu) return;
+    if (menu.getAttribute('aria-hidden') === 'false') {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  });
+  if (menu) {
+    observer.observe(menu, { attributes: true, attributeFilter: ['aria-hidden'] });
+  }
+});
+</script>
   </div>
-
 
 <style>
   .main-menu {
@@ -79,16 +99,16 @@ import SocialLinks from "../molecules/SocialLinks.astro";
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 1rem;
+   
     top: 120%;
     right: 1rem;
-    max-width: 350px;
+    min-width: 350px;
     border-radius: 1rem;
     overflow: hidden;
     box-shadow:
       0 8px 32px 0 rgba(0, 0, 0, 0.64),
       0 1.5px 8px 0 rgba(1,29,22,0.18),
-      0 0 0 9999px rgba(9, 15, 14, 0.554);
+      0 0 0 9999px rgba(9, 15, 14, 0.85);
     list-style: none;
     opacity: 0;
     transform: translateY(-10px);
@@ -96,7 +116,8 @@ import SocialLinks from "../molecules/SocialLinks.astro";
       opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
       transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
-    z-index: 1000;
+    z-index: -1;
+    outline: none;
   }
 
   .main-menu-links {
@@ -125,7 +146,9 @@ import SocialLinks from "../molecules/SocialLinks.astro";
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+    
   }
+
 
   .main-menu li {
     margin-bottom: 0.5rem;
@@ -149,23 +172,33 @@ import SocialLinks from "../molecules/SocialLinks.astro";
     outline-offset: 2px;
   }
 
+
+  .main-menu-info-container{
+    width: 100%;
+        background-color: var(--primary-700);
+ 
+  }
   .main-menu-info {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: var(--primary-700);
-    padding: 1.2rem 1.2rem;
+    padding: 1.5rem 1rem;
+
   }
 
-  .social-links {
+
+  .social-links-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    width:100%;
+    background-color: var(--primary-600);
+ padding: 1rem;
   }
+
 
   .social-links svg {
     width: 2rem;
