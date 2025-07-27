@@ -48,19 +48,51 @@ window.addEventListener('DOMContentLoaded', function() {
     function updateFilter() {
       // Select all product <li> elements directly under .products-list
       const items = document.querySelectorAll('.products-list > li');
-      items.forEach(li => {
-        const item = li as HTMLElement;
-        const cat = item.dataset.category || '';
-        if (!(checkbox as HTMLInputElement).checked) {
-          item.classList.remove('hidden-product');
-        } else {
+      if (!(checkbox as HTMLInputElement).checked) {
+        // Remove hidden-product from all items
+        items.forEach(li => {
+          li.classList.remove('hidden-product');
+        });
+        // Show all product sections
+        document.querySelectorAll('.product-section').forEach(section => {
+          (section as HTMLElement).style.display = '';
+        });
+        // Show all FoodNav links
+        document.querySelectorAll('.food-nav a.food-link').forEach(link => {
+          (link as HTMLElement).style.display = '';
+        });
+      } else {
+        items.forEach(li => {
+          const item = li as HTMLElement;
+          const cat = item.dataset.category || '';
           if (cat.includes('veg')) {
             item.classList.remove('hidden-product');
           } else {
             item.classList.add('hidden-product');
           }
-        }
-      });
+        });
+        // Sync FoodNav links with visible product sections
+        document.querySelectorAll('.product-section').forEach(section => {
+          const sectionEl = section as HTMLElement;
+          const list = sectionEl.querySelector('.products-list') as HTMLElement | null;
+          if (!list) return;
+          // Only count <li> that are not display:none (works for grid/flex)
+          const hasVisible = Array.from(list.children).some(li => {
+            const el = li as HTMLElement;
+            return window.getComputedStyle(el).display !== 'none';
+          });
+          sectionEl.style.display = hasVisible ? '' : 'none';
+          // Hide/show FoodNav link matching this section
+          const sectionId = sectionEl.id;
+          if (sectionId) {
+            // Look for nav links with href="#sectionId"
+            const navLink = document.querySelector(`.food-nav a[href="#${sectionId}"]`);
+            if (navLink) {
+              (navLink as HTMLElement).style.display = hasVisible ? '' : 'none';
+            }
+          }
+        });
+      }
       // Update veg mode status
       const status = document.getElementById('veg-mode-status');
       if (status) {
@@ -73,22 +105,6 @@ window.addEventListener('DOMContentLoaded', function() {
   }, 0);
 });
 
-// Add scroll-up transform logic (same as FoodNav)
-// window.addEventListener('DOMContentLoaded', function() {
-//   const filterBar = document.querySelector('.filter-switch-container');
-//   if (!filterBar) return;
-//   let lastScrollY = window.scrollY;
-//   window.addEventListener('scroll', () => {
-//     const currentScrollY = window.scrollY;
-//     if (currentScrollY === 0) {
-//       filterBar.classList.remove('scroll-up');
-//     } else if (currentScrollY < lastScrollY) {
-//       filterBar.classList.add('scroll-up');
-//     } else {
-//       filterBar.classList.remove('scroll-up');
-//     }
-//     lastScrollY = currentScrollY;
-//   });
-// });
+
 </script>
 

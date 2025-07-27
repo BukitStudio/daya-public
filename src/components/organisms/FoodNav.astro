@@ -199,7 +199,7 @@ window.addEventListener('DOMContentLoaded', function() {
   sections.forEach((section) => {
     const s = section;
     const sectionHeight = (s).offsetHeight;
-    const sectionTop = (s).offsetTop - 300; // adjust for sticky nav
+    const sectionTop = (s).offsetTop  +200; // adjust for sticky nav
     const id = s.getAttribute("id");
     const currentNavLink = document.querySelector(`.food-link[href="#${id}"]`);
     if (
