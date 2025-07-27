@@ -3,20 +3,25 @@ import LogoDayaType from "../atoms/LogoDayaType.astro";
 import Info from "../../data/info.json";
 import SocialLinks from "../molecules/SocialLinks.astro";
 import GmapIcon from "../../assets/icons/gmaps.svg";
+import LogoDayaSolo from "../atoms/LogoDayaSolo.astro";
+import LogoDayaHead from "../../../public/LogoDaya-head.svg";
 ---
 
 <footer class="footer">
-  <div class="footer-brand">
+  <div class="footer-brand-container">
+<div class="footer-brand">
     <a href="/" aria-label="Accueil">
       <LogoDayaType width=250 />
     </a>
+    <p class="neutral-500 txt-s mb0 center">De la cuisine maison avec des produits frais et de qualité. Nous proposons également des plats végétariens. Venez découvrir notre restaurant situé à deux pas de la plage d’hendaye au pays basque : )</p>
 
-  <SocialLinks />
-      <p class="bold center mt2 mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer"><GmapIcon /> {Info.address}</a></p>
+   <SocialLinks />
+      <p class="bold center mt0 mb0"><a href={Info.gmaps} target="_blank" rel="noopener noreferrer"><GmapIcon /> {Info.address}</a></p>
 
+         
       <p class="center neutral-500 mb0" set:html={Info.operatingHours.replace(/\n/g, '<br>')}></p>
-    
 
+</div>
 
 </div>
    
@@ -35,12 +40,47 @@ import GmapIcon from "../../assets/icons/gmaps.svg";
 
 <style>
   .footer {
-   
-    background-color: var(--primary-600);
+    background-color: var(--primary-700);
     z-index: 999;
   
-    
+
   }
+  .footer-brand-container{
+    position: relative;
+  }
+
+  .footer-brand-container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url('/LogoDaya-head.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 200% auto;
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .footer-brand {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: auto;
+    overflow: hidden;
+    max-width: 40ch;
+    padding: 6rem 1rem;
+    z-index: 1;
+  }
+
+
+
   .footer-brand a[href*="google.com"] {
     display: inline-flex;
     align-items: center;
@@ -53,17 +93,6 @@ import GmapIcon from "../../assets/icons/gmaps.svg";
     outline: none;
     box-shadow: none;
   }
-  .footer-brand {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin:auto;
-
-    max-width: 40ch;
-    padding: 3rem 1rem;
-  }
 
 
   .footer-credits {
@@ -71,7 +100,9 @@ import GmapIcon from "../../assets/icons/gmaps.svg";
   background-color: var(--primary-500);
 }
 
+.footer-logo-head{
 
+}
 
 
 </style>
