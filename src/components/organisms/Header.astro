@@ -1,10 +1,10 @@
 ---
 import Hamburger from "../atoms/Hamburger.astro";
 import MainMenu from "./MainMenu.astro";
-import Daya from "../../assets/icons/logo/daya.svg";
-import FoodNav from "./FoodNav.astro";
 import type { Product } from "../../data/productsSchema";
 import { fetchProductsSheet } from "../../data/fetchProductsSheet";
+import LogoDayaSolo from "../atoms/LogoDayaSolo.astro";
+
 
 const products: Product[] = await fetchProductsSheet();
 
@@ -20,10 +20,11 @@ const types: string[] = Object.keys(grouped);
 
 <header class="header">
   <nav class="nav" aria-label="Main navigation">
-        <a href="/" aria-label="Accueil">
-      <Daya width={70} />
-    </a>
-    <Hamburger />
+        
+  <div class="logo-container">
+    <a href="/" aria-label="Accueil"><LogoDayaSolo  width="70" height="60"/> </a>
+  </div>
+  <Hamburger />
   </nav>
 
   <MainMenu />
@@ -34,16 +35,26 @@ const types: string[] = Object.keys(grouped);
 
   .header {
     width: 100%;
-    height: 60px;
+    min-height: 60px;
+
     display: flex;
-    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
     z-index: 11000;
     position: sticky;
+    box-sizing: border-box;
     top: 0rem;
     background-color: transparent;
     transition: background-color .1s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
 
   }
+/* .logo-container{
+  font-display: block;
+  min-height: fit-content;
+    justify-content: center;
+} */
+
 
   .header.header--scrolled {
     background-color: var(--primary-700);
@@ -51,10 +62,7 @@ const types: string[] = Object.keys(grouped);
 
   }
 
-  .header svg {
-   min-width: 1.5rem;
-    min-height: 1.5rem;
-  }
+
   nav {
     display: flex;
     flex-direction: row;
