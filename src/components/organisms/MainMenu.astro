@@ -222,17 +222,17 @@ window.addEventListener('DOMContentLoaded', function() {
     menu.setAttribute('aria-hidden', 'true');
     menu.setAttribute('hidden', '');
   }
-  function handlePointerDown(e) {
+  function handlePointerDown(e: Event) {
     if (!menu) return;
     if (menu.getAttribute('aria-hidden') === 'true') return;
-    if (!menu.contains(e.target)) {
+    if (!menu.contains(e.target as Node)) {
       closeMenu();
     }
   }
-  function handleFocusIn(e) {
+  function handleFocusIn(e: Event) {
     if (!menu) return;
     if (menu.getAttribute('aria-hidden') === 'true') return;
-    if (!menu.contains(e.target)) {
+    if (!menu.contains(e.target as Node)) {
       closeMenu();
     }
   }

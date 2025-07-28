@@ -166,9 +166,9 @@ let ticking = false;
 
 
 const sections = Array.from(document.querySelectorAll("section[id]"));
-let lastActiveId = null;
+let lastActiveId: string | null = null;
 
-function centerActiveLink(link) {
+function centerActiveLink(link: HTMLElement) {
   const ul = link.closest("ul");
   if (ul && window.innerWidth <= 768) {
     const ulRect = ul.getBoundingClientRect();
@@ -192,14 +192,14 @@ function scrollTracker() {
 // Remove sticky :active/focus from food-link after tap/click (mobile)
 window.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.food-link').forEach(link => {
-    link.addEventListener('touchend', () => link.blur(), { passive: true });
-    link.addEventListener('click', () => link.blur(), { passive: true });
+    link.addEventListener('touchend', () => (link as HTMLElement).blur(), { passive: true });
+    link.addEventListener('click', () => (link as HTMLElement).blur(), { passive: true });
   });
 });
   sections.forEach((section) => {
     const s = section;
-    const sectionHeight = (s).offsetHeight;
-    const sectionTop = (s).offsetTop  +200; // adjust for sticky nav
+    const sectionHeight = (s as HTMLElement).offsetHeight;
+    const sectionTop = (s as HTMLElement).offsetTop  +200; // adjust for sticky nav
     const id = s.getAttribute("id");
     const currentNavLink = document.querySelector(`.food-link[href="#${id}"]`);
     if (

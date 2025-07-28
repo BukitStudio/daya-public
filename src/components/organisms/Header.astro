@@ -90,14 +90,15 @@ import Hamburger from "../atoms/Hamburger.astro";
   const hamburgerBtn = document.querySelector("#hamburger");
   const menu = document.getElementById("main-menu");
   const nav = document.querySelector(".nav");
+  function setMenuTabbable(isOpen: boolean) {
+    if (!menu) return;
+    const links = menu.querySelectorAll("a, button, input, select, textarea");
+    links.forEach((link) => {
+      (link as HTMLElement).tabIndex = isOpen ? 0 : -1;
+    });
+  }
+
   if (hamburgerBtn && menu && nav) {
-    function setMenuTabbable(isOpen: boolean) {
-      if (!menu) return;
-      const links = menu.querySelectorAll("a, button, input, select, textarea");
-      links.forEach((link) => {
-        (link as HTMLElement).tabIndex = isOpen ? 0 : -1;
-      });
-    }
     hamburgerBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       const expanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
@@ -159,8 +160,8 @@ import Hamburger from "../atoms/Hamburger.astro";
     const next = e.relatedTarget;
     if (
       next &&
-      !menu.contains(next) &&
-      !hamburgerBtn.contains(next)
+      !menu.contains(next as Node) &&
+      !hamburgerBtn.contains(next as Node)
     ) {
       hamburgerBtn.setAttribute("aria-expanded", "false");
       menu.setAttribute("aria-hidden", "true");
