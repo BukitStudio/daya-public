@@ -1,9 +1,10 @@
 ---
 import Hamburger from "../atoms/Hamburger.astro";
+import DayaSolo from "../../assets/icons/logo/dayaSolo.svg";
 import MainMenu from "./MainMenu.astro";
 import type { Product } from "../../data/productsSchema";
 import { fetchProductsSheet } from "../../data/fetchProductsSheet";
-import DayaSolo from "../../assets/icons/logo/dayaSolo.svg";
+
 
 
 const products: Product[] = await fetchProductsSheet();
@@ -44,7 +45,7 @@ const types: string[] = Object.keys(grouped);
   padding: 0 1rem;
   z-index: 9;
   position: sticky;
-  top: -1px;
+  top: -0.5px;
   left: 0;
   right: 0;
   background-color: transparent;
@@ -55,9 +56,11 @@ const types: string[] = Object.keys(grouped);
     -webkit-transform: translateZ(0);
 }
 .header svg {
+  /* border: 1px solid red; */
   height: 30px; 
   fill: var(--secondary-700);
   width: auto;
+  transform-style: preserve-3d;
 
   display: block;
 }

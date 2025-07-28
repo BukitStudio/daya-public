@@ -1,0 +1,55 @@
+---
+
+import '../styles/reset.css';
+import '../styles/themes.css';
+import '../styles/fonts.css';
+import '../styles/global.css';
+import Header from '../components/organisms/Header.astro';
+import Footer from '../components/organisms/Footer.astro';
+
+
+
+const siteName = "Daya Hendaye";
+const baseUrl = "https://dayahendaye.fr";
+
+const {
+  pageTitle = "Street food asiatique à Hendaye",
+  canonicalUrl,
+  description = `Daya hendaye c’est le meilleur de la street food vietnamienne, thaï et cambodgienne. De la cuisine maison avec des produits frais et de qualité. Nous proposons également des plats végétariens. Venez découvrir notre restaurant situé à deux pas de la plage d’hendaye au pays basque : )`,
+} : {
+  pageTitle?: string;
+  canonicalUrl?: string;
+  description?: string;
+} = Astro.props;
+
+// Compute canonical URL dynamically if not provided
+const computedCanonicalUrl = canonicalUrl || baseUrl + Astro.url.pathname;
+---
+
+
+
+
+<head>
+  <!-- <meta charset="utf-8" /> -->
+  <meta name="viewport" content="width=device-width" /> 
+    <!-- <link rel="robots" href="/robots.txt" /> -->
+
+  <!-- <meta name="generator" content={Astro.generator} /> -->
+  <!-- <title>{pageTitle} | {siteName}</title> -->
+
+
+
+
+</head>
+
+<body >
+
+  <main>
+    <slot />
+ 
+  </main>
+    <Footer />
+</body>
+
+</html>
+
