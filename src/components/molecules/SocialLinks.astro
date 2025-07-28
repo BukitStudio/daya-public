@@ -9,17 +9,17 @@ const { class: className = "social-links" } = Astro.props;
 ---
 
 
-<div class={className}>
-  <a href={Info.insta} target="_blank" rel="noopener noreferrer">
+<div class={className} role="group" aria-label="Liens sociaux">
+  <a href={Info.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" role="link">
     <WhatsAppIcon />
   </a>
-  <a href={Info.insta} target="_blank" rel="noopener noreferrer">
+  <a href={Info.insta} target="_blank" rel="noopener noreferrer" aria-label="Instagram" role="link">
     <InstagramIcon />
   </a>
-  <a href={Info.facebook} target="_blank" rel="noopener noreferrer">
+  <a href={Info.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" role="link">
     <FacebookIcon />
   </a>
-  <a href={`mailto:${Info.email}`} target="_blank" rel="noopener noreferrer">
+  <a href={`mailto:${Info.email}`} target="_blank" rel="noopener noreferrer" aria-label="Email" role="link">
     <MailIcon />
   </a>
 </div>

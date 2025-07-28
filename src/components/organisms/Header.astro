@@ -3,7 +3,6 @@ import Hamburger from "../atoms/Hamburger.astro";
 import MainMenu from "./MainMenu.astro";
 import type { Product } from "../../data/productsSchema";
 import { fetchProductsSheet } from "../../data/fetchProductsSheet";
-import LogoDayaSolo from "../atoms/LogoDayaSolo.astro";
 import DayaSolo from "../../assets/icons/logo/dayaSolo.svg";
 
 
@@ -85,6 +84,8 @@ const types: string[] = Object.keys(grouped);
 </style>
 
 <script>
+import Hamburger from "../atoms/Hamburger.astro";
+
   // Hamburger menu toggle functionality
   const hamburgerBtn = document.querySelector("#hamburger");
   const menu = document.getElementById("main-menu");
@@ -152,16 +153,16 @@ const types: string[] = Object.keys(grouped);
   }
 
   // Handle focus out to close menu
-    if (menu && logoBtn) {
+    if (menu && hamburgerBtn) {
   menu.addEventListener("focusout", (e) => {
     // @ts-ignore
     const next = e.relatedTarget;
     if (
       next &&
       !menu.contains(next) &&
-      !logoBtn.contains(next)
+      !hamburgerBtn.contains(next)
     ) {
-      logoBtn.setAttribute("aria-expanded", "false");
+      hamburgerBtn.setAttribute("aria-expanded", "false");
       menu.setAttribute("aria-hidden", "true");
       menu.hidden = true;
       setMenuTabbable(false);

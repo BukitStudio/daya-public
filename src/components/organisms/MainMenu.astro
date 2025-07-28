@@ -9,18 +9,19 @@ import WazeIcon from "../../assets/icons/waze.svg";
 import SocialLinks from "../molecules/SocialLinks.astro";
 ---
 
-<div id="main-menu" class="main-menu" tabindex="-1" hidden>
-  <div class="main-menu-links">
+<nav id="main-menu" class="main-menu" tabindex="-1" hidden aria-label="Menu principal" role="navigation">
+  <div class="main-menu-links" role="menu" aria-label="Liens de commande et d'accès">
     <p class="uppercase">Commander</p>
-    <ul class="link-group">
+    <ul class="link-group" role="group" aria-label="Commander">
       <li>
         <BtnLink
           href={Info.clickCollect}
           background="#E84349"
           color="#fff"
-          ariaLabel="Click and Collect"
+          ariaLabel="Click & Collect"
           icon={ClickCollectIcon}
           text="Click & Collect"
+          role="menuitem"
         />
       </li>
 
@@ -32,11 +33,12 @@ import SocialLinks from "../molecules/SocialLinks.astro";
           ariaLabel="WhatsApp"
           icon={WhatsappIcon}
           text="WhatsApp"
+          role="menuitem"
         />
       </li>
     </ul>
     <p class="uppercase mt1">Nous trouver</p>
-    <ul class="link-group">
+    <ul class="link-group" role="group" aria-label="Nous trouver">
       <li>
         <BtnLink
           href={Info.gmaps}
@@ -46,6 +48,7 @@ import SocialLinks from "../molecules/SocialLinks.astro";
           icon={GmapsIcon}
           text="Google Maps"
           iconSize="1em"
+          role="menuitem"
         />
       </li>
       <li>
@@ -57,6 +60,7 @@ import SocialLinks from "../molecules/SocialLinks.astro";
           icon={WazeIcon}
           text="Waze"
           iconSize="1em"
+          role="menuitem"
         />
       </li>
     </ul>
