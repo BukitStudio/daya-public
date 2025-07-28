@@ -21,7 +21,7 @@ const types: string[] = Object.keys(grouped);
 
 <section class="Food-Products">
   <FoodNav categories={types} />
-  <div class="product-list-container pb3">
+  <div class="product-list-container pb2">
     <FilterVeg/>
     {types.map((type: string) => (
       <section id={`${type.toLowerCase().replace(/\s+/g, '-')}`}  
@@ -69,7 +69,7 @@ const types: string[] = Object.keys(grouped);
   z-index: 9;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(40px);
+
   transition: opacity 0.4s, transform 0.4s;
 }
 .click-collect-btn.show {
@@ -88,6 +88,7 @@ const types: string[] = Object.keys(grouped);
     justify-content: center;
     padding: 3rem 2rem;
     margin: 0 auto;
+
     min-width: 0;
   }
 
@@ -128,20 +129,27 @@ border-radius: .5rem;
   font-size: 1.5rem;
   left: 0;
   right: 0;
-  border-radius: 0px;
-  bottom: 0rem;
-  width: 100%;
+  border-radius: 1rem;
+  bottom: .8rem;
+  width: 90%;
   height: 60px;
-  margin: 0 auto;
+
   z-index: 9;
-  transition: opacity 0.2s, visibility 0.2s;
+  transition: opacity 0.4s, visibility 0.2s;
 
 }
 
-.product-list-container{
+/* .product-list-container{
   padding-bottom: 0rem;
-}
+} */
 
+  .FoodProducts .food-nav {
+      top: 0;
+      bottom: 0;
+      width: 100vw;
+      left: 0;
+      right: 0;
+    }
 
   }
 
@@ -159,15 +167,7 @@ border-radius: .5rem;
     z-index: 1000;
   }
 
-  @media screen and (max-width: 768px) {
-    .FoodProducts .food-nav {
-      top: 0;
-      bottom: 0;
-      width: 100vw;
-      left: 0;
-      right: 0;
-    }
-  }
+
   </style>
 
 <script>
