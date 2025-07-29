@@ -66,7 +66,7 @@ import MainMenu from "./MainMenu.astro";
     scrollTimeout = window.setTimeout(onScroll, 10);
   });
 
-  // Hamburger menu toggle functionality (modern, simple)
+  // Hamburger menu toggle functionality
   const hamburgerBtn = document.querySelector("#hamburger");
   const menu = document.getElementById("main-menu");
   if (hamburgerBtn && menu) {
@@ -77,13 +77,6 @@ import MainMenu from "./MainMenu.astro";
       menu.setAttribute("aria-hidden", String(expanded));
       menu.hidden = expanded;
     });
-    // Close menu when clicking outside
-    document.addEventListener("click", (e) => {
-      if (!menu.contains(e.target as Node) && e.target !== hamburgerBtn) {
-        hamburgerBtn.setAttribute("aria-expanded", "false");
-        menu.setAttribute("aria-hidden", "true");
-        menu.hidden = true;
-      }
-    });
+
   }
 </script>
