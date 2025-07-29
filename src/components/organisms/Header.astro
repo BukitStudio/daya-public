@@ -2,135 +2,90 @@
 import Hamburger from "../atoms/Hamburger.astro";
 import DayaSolo from "../../assets/icons/logo/dayaSolo.svg";
 import MainMenu from "./MainMenu.astro";
-import type { Product } from "../../data/productsSchema";
-import { fetchProductsSheet } from "../../data/fetchProductsSheet";
-
-
-
-const products: Product[] = await fetchProductsSheet();
-
-// Group products by type
-const grouped: Record<string, Product[]> = {};
-for (const product of products) {
-  const type: string = product.type?.split(",")[0]?.trim() || "Autres";
-  if (!grouped[type]) grouped[type] = [];
-  grouped[type].push(product);
-}
-const types: string[] = Object.keys(grouped);
 ---
 
 <header class="header">
   <div class="nav" aria-label="Main navigation">
-        <a href="/" aria-label="Accueil"><DayaSolo/> </a>
+    <a href="/" aria-label="Accueil"><DayaSolo /> </a>
   </div>
   <div>
-  <Hamburger />
+    <Hamburger />
   </div>
 
-
   <MainMenu />
-
 </header>
 
 <style>
-
-.header {
-  width: 100%;
-  min-height: 60px;
-  height: 60px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
-  z-index: 9;
-  position: sticky;
-  top: 0px;
-  left: 0;
-  right: 0;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-}
-.header svg {
-
-  height: 30px; 
-  fill: var(--secondary-700);
-  width: auto;
-  transform-style: preserve-3d;
-  display: block;
-}
-
-
+  .header {
+    width: 100%;
+    min-height: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    z-index: 9;
+    position: sticky;
+    top: 0px;
+    left: 0;
+    right: 0;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  .header svg {
+    height: 30px;
+    fill: var(--secondary-700);
+    width: auto;
+    transform-style: preserve-3d;
+    display: block;
+  }
 
   .header--scrolled {
     background-color: var(--primary-700);
-       transition: background-color .4s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
-
+    transition:
+      background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
-
-  nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-left: auto;
-  }
-
 
 </style>
 
 <script>
 
-
-
   // Header bg show on scroll down
-
 const header = document.querySelector("header");
-const onScroll = () => {
-  if (!header) return;
-  header.classList.toggle("header--scrolled", window.scrollY > 410);
-};
+  const onScroll = () => {
+    if (!header) return;
+    header.classList.toggle("header--scrolled", window.scrollY > 410);
+  };
 
-// Debounce utility
-let scrollTimeout: number | undefined;
-window.addEventListener("scroll", () => {
-  clearTimeout(scrollTimeout);
-  scrollTimeout = window.setTimeout(onScroll, 10);
-});
-
-
-
-
-
-
-// Hamburger menu toggle functionality (modern, simple)
-const hamburgerBtn = document.querySelector("#hamburger");
-const menu = document.getElementById("main-menu");
-if (hamburgerBtn && menu) {
-  hamburgerBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const expanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
-    hamburgerBtn.setAttribute("aria-expanded", String(!expanded));
-    menu.setAttribute("aria-hidden", String(expanded));
-    menu.hidden = expanded;
+  // Debounce utility
+  let scrollTimeout: number | undefined;
+  window.addEventListener("scroll", () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = window.setTimeout(onScroll, 10);
   });
-  // Close menu when clicking outside
-  document.addEventListener("click", (e) => {
-    if (!menu.contains(e.target as Node) && e.target !== hamburgerBtn) {
-      hamburgerBtn.setAttribute("aria-expanded", "false");
-      menu.setAttribute("aria-hidden", "true");
-      menu.hidden = true;
-    }
-  });
-}
 
-
-
-
-
-
+  // Hamburger menu toggle functionality (modern, simple)
+  const hamburgerBtn = document.querySelector("#hamburger");
+  const menu = document.getElementById("main-menu");
+  if (hamburgerBtn && menu) {
+    hamburgerBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const expanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
+      hamburgerBtn.setAttribute("aria-expanded", String(!expanded));
+      menu.setAttribute("aria-hidden", String(expanded));
+      menu.hidden = expanded;
+    });
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!menu.contains(e.target as Node) && e.target !== hamburgerBtn) {
+        hamburgerBtn.setAttribute("aria-expanded", "false");
+        menu.setAttribute("aria-hidden", "true");
+        menu.hidden = true;
+      }
+    });
+  }
 </script>
