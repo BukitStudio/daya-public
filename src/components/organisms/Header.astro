@@ -42,13 +42,15 @@ const types: string[] = Object.keys(grouped);
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+      /* background-color: var(--primary-700); */
+
   padding: 0 1rem;
   z-index: 9;
   position: sticky;
-  top: -0.5px;
+  top: 0px;
   left: 0;
   right: 0;
-  background-color: transparent;
+  /* background-color: transparent; */
   /* transition: background-color .1s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1); */
   will-change: transform;
   backface-visibility: hidden;
@@ -56,18 +58,17 @@ const types: string[] = Object.keys(grouped);
     -webkit-transform: translateZ(0);
 }
 .header svg {
-  /* border: 1px solid red; */
+
   height: 30px; 
   fill: var(--secondary-700);
   width: auto;
   transform-style: preserve-3d;
-
   display: block;
 }
 
 
 
-  .header.header--scrolled {
+  .header--scrolled {
     background-color: var(--primary-700);
        transition: background-color .4s cubic-bezier(0.4,0,0.2,1), transform .3s cubic-bezier(0.4,0,0.2,1);
 
@@ -87,92 +88,53 @@ const types: string[] = Object.keys(grouped);
 </style>
 
 <script>
-import Hamburger from "../atoms/Hamburger.astro";
 
-  // Hamburger menu toggle functionality
-  const hamburgerBtn = document.querySelector("#hamburger");
-  const menu = document.getElementById("main-menu");
-  const nav = document.querySelector(".nav");
-  function setMenuTabbable(isOpen: boolean) {
-    if (!menu) return;
-    const links = menu.querySelectorAll("a, button, input, select, textarea");
-    links.forEach((link) => {
-      (link as HTMLElement).tabIndex = isOpen ? 0 : -1;
-    });
-  }
 
-  if (hamburgerBtn && menu && nav) {
-    hamburgerBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const expanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
-      hamburgerBtn.setAttribute("aria-expanded", String(!expanded));
-      menu.setAttribute("aria-hidden", String(expanded));
-      menu.hidden = expanded;
-      setMenuTabbable(!expanded);
-    });
-    // Ensure menu is hidden initially
-    menu.setAttribute("aria-hidden", "true");
-    menu.hidden = true;
-    setMenuTabbable(false);
 
-    document.addEventListener("click", (e) => {
-      if (!nav.contains(e.target as Node)) {
-        menu.setAttribute("aria-hidden", "true");
-        menu.hidden = true;
-        setMenuTabbable(false);
-      }
-    });
-  }
+  // Header bg show on scroll down
 
-  // Hide header on scroll down, show on scroll up
+const header = document.querySelector("header");
+const onScroll = () => {
+  if (!header) return;
+  header.classList.toggle("header--scrolled", window.scrollY > 410);
+};
 
-  const headerHide = document.querySelector("header");
-  let lastScrollY = window.scrollY;
-  let ticking = false;
+// Debounce utility
+let scrollTimeout: number | undefined;
+window.addEventListener("scroll", () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = window.setTimeout(onScroll, 10);
+});
 
-  function onScroll() {
-    if (!headerHide) return;
-    const currentScrollY = window.scrollY;
-    if (currentScrollY > 410) {
-      headerHide.classList.add("header--scrolled");
-    } else {
-      headerHide.classList.remove("header--scrolled");
-    }
-    ticking = false;
-  }
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      window.requestAnimationFrame(onScroll);
-      ticking = true;
-    }
+
+
+
+
+
+// Hamburger menu toggle functionality (modern, simple)
+const hamburgerBtn = document.querySelector("#hamburger");
+const menu = document.getElementById("main-menu");
+if (hamburgerBtn && menu) {
+  hamburgerBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const expanded = hamburgerBtn.getAttribute("aria-expanded") === "true";
+    hamburgerBtn.setAttribute("aria-expanded", String(!expanded));
+    menu.setAttribute("aria-hidden", String(expanded));
+    menu.hidden = expanded;
   });
-
-  // Set initial state on load
-  if (headerHide) {
-    if (window.scrollY > 460) {
-      headerHide.classList.add("header--scrolled");
-    } else {
-      headerHide.classList.remove("header--scrolled");
-    }
-  }
-
-  // Handle focus out to close menu
-    if (menu && hamburgerBtn) {
-  menu.addEventListener("focusout", (e) => {
-    // @ts-ignore
-    const next = e.relatedTarget;
-    if (
-      next &&
-      !menu.contains(next as Node) &&
-      !hamburgerBtn.contains(next as Node)
-    ) {
+  // Close menu when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!menu.contains(e.target as Node) && e.target !== hamburgerBtn) {
       hamburgerBtn.setAttribute("aria-expanded", "false");
       menu.setAttribute("aria-hidden", "true");
       menu.hidden = true;
-      setMenuTabbable(false);
     }
   });
 }
+
+
+
+
 
 
 </script>
